@@ -17,6 +17,6 @@ import lombok.NoArgsConstructor;
 public class MemberCardDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String cardNum;
-	private Timestamp expirationDate;
+	private String cardNum;//카드번호
+	private Timestamp expirationDate;//유효일자
 }

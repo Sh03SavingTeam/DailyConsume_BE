@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.Domain;
+package com.shinhan.dailyconsume.domain;
 
 import java.sql.Timestamp;
 
