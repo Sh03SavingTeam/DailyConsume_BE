@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.dto;
+package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Entity
 @Table(name = "comment")
-public class CommentDTO {
+public class CommentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long commentId;
