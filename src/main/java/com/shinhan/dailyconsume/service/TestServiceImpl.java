@@ -16,10 +16,8 @@ public class TestServiceImpl implements TestSerivce{
 	
 	@Override
 	public TestDTO test() {
-		TestEntity entity = tRepo.findById(1L).orElse(null);
-		return TestDTO.builder()
-				.str(entity.getStr())
-				.build();
+
+		return null;
 	}
 
 }
