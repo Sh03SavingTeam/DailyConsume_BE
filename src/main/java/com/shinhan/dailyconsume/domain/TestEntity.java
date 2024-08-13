@@ -1,6 +1,4 @@
-package com.shinhan.dailyconsume.Domain;
-
-import java.sql.Timestamp;
+package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,14 +11,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "t_member_card")
+@Table(name = "t_test")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class MemberCardEntity {
+public class TestEntity {
 	@Id
-	String cardNum;
-	Timestamp expirationDate;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
+	private String str;
 }
