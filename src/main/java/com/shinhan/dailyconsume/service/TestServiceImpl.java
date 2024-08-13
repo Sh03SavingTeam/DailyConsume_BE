@@ -2,7 +2,6 @@ package com.shinhan.dailyconsume.service;
 
 import org.springframework.stereotype.Service;
 
-import com.shinhan.dailyconsume.Domain.TestEntity;
 import com.shinhan.dailyconsume.dto.TestDTO;
 import com.shinhan.dailyconsume.repository.TestRepository;
 
@@ -16,10 +15,8 @@ public class TestServiceImpl implements TestSerivce{
 	
 	@Override
 	public TestDTO test() {
-		TestEntity entity = tRepo.findById(1L).orElse(null);
-		return TestDTO.builder()
-				.str(entity.getStr())
-				.build();
+
+		return null;
 	}
 
 }
