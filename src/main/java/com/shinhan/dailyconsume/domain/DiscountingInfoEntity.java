@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.Domain;
+package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,16 +10,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "t_test")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
-public class TestEntity {
+@Entity
+@Table(name = "t_discounting_info")
+public class DiscountingInfoEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long discountId;
 	
-	private String str;
+	private String storeName;
+	
+	private String productName;
+	
+	private int amount;
+	
+	private String prductContent;
+	
+	private String productCategory;
+	
+	private String prodImg;
 }

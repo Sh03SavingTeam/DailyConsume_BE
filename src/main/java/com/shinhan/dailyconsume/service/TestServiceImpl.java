@@ -2,7 +2,7 @@ package com.shinhan.dailyconsume.service;
 
 import org.springframework.stereotype.Service;
 
-import com.shinhan.dailyconsume.Domain.TestEntity;
+import com.shinhan.dailyconsume.domain.TestEntity;
 import com.shinhan.dailyconsume.dto.TestDTO;
 import com.shinhan.dailyconsume.repository.TestRepository;
 
