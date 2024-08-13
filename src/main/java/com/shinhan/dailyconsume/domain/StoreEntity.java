@@ -32,6 +32,9 @@ public class StoreEntity {
 	@OneToMany(mappedBy = "store"
 			, fetch = FetchType.LAZY)
 	private List<ReviewEntity> review;
+	
+	@OneToMany(mappedBy = "storeEntity", fetch = FetchType.LAZY)
+	private List<MenuEntity> menus;
 
 	@OneToOne
 	@JoinColumn(name = "storeCateSeq")
