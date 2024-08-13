@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.Domain;
+package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
