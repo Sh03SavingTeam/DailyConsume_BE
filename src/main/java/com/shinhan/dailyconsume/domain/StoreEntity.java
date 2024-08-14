@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -27,13 +28,15 @@ public class StoreEntity {
 	
 	private String storeName;
 	private String storeAddr;
-	private String storephone;
+	private String storePhone;
+	private Double storeLatX;
+	private Double storeLonY;
 	
 	@OneToMany(mappedBy = "store"
 			, fetch = FetchType.LAZY)
 	private List<ReviewEntity> review;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "storeCateSeq")
 	StoreCategoryEntity storeCate;
 }

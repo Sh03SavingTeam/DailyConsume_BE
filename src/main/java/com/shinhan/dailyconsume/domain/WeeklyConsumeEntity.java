@@ -1,8 +1,7 @@
 package com.shinhan.dailyconsume.domain;
 
-import java.util.List;
+import java.sql.Timestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,8 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,27 +16,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "t_store_category")
+@Table(name = "t_weekly_consume")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class StoreCategoryEntity {
-
+public class WeeklyConsumeEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long storeCateSeq;
+	private Long weeklySeq;
 	
-	private int cateDepth;
-	private String cateName;
+	private Timestamp startDate;
+	private Timestamp endDate;
+	private String weeklyCheck;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name ="upperCateSeq")
-    private StoreCategoryEntity upperCate;
+	@JoinColumn(name="memberId")
+	private MemberEntity member;
 
-	@OneToMany (mappedBy = "upperCate", cascade = CascadeType.ALL)
-    private List<StoreCategoryEntity> subCate;
-    
-    @OneToMany(mappedBy = "storeCate")
-    private List<StoreEntity> store;
 }

@@ -1,6 +1,7 @@
 package com.shinhan.dailyconsume.domain;
 
-import java.sql.Date;import jakarta.persistence.CascadeType;
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -28,10 +29,12 @@ public class MemberEntity {
 	String memberGender;
 	Date memberBirth;
 	String memberAccount;
+	Long pointAmount;
 	
 	@OneToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "rankId")
 	RankEntity rank;
 	
-	Long pointAmount;
+	
+	
 }
