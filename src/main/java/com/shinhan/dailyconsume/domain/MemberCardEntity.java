@@ -26,6 +26,7 @@ public class MemberCardEntity {
 	@Id
 	String cardNum;
 	Timestamp expirationDate;
+	Long cvc;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cardId")

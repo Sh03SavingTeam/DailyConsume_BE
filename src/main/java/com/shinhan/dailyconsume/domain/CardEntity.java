@@ -24,5 +24,4 @@ public class CardEntity {
 	String cardName;
 	String cardImgUrl;
 	String cardPageUrl;
-	
 }
