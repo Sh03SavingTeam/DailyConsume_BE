@@ -29,7 +29,4 @@ public class CardEntity {
 	String cardImgUrl;
 	String cardPageUrl;
 	
-	@OneToMany(mappedBy = "cards", fetch = FetchType.LAZY)
-	private List<PayHistoryEntity> payHistories;
-	
 }

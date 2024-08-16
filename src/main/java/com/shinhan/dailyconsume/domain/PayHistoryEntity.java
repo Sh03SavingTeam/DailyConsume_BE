@@ -1,6 +1,5 @@
 package com.shinhan.dailyconsume.domain;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,12 +35,12 @@ public class PayHistoryEntity {
 	private Timestamp payDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "consume_id")
+	@JoinColumn(name = "consumeId")
 	private ConsumeCategoryEntity consumeCategory;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cardNum")
-	private CardEntity cards;
+	private MemberCardEntity memberCard;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "strRegNum")
