@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class MemberCardEntity {
 	@Id
 	String cardNum;
-	Timestamp expirationDate;
+	String expirationDate;
 	Long cvc;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

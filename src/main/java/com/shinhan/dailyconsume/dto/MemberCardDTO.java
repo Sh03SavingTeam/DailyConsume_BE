@@ -18,7 +18,7 @@ public class MemberCardDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String cardNum;//카드번호
-	private Timestamp expirationDate;//유효일자
+	private String expirationDate;//유효일자
 	private Long cvc;
 	private Long cardId;
 	private String memberId;

@@ -21,7 +21,7 @@ import com.shinhan.dailyconsume.service.OCRService;
 public class CardRestController {
 	
 	@Autowired
-	OCRService ocrSevice;
+	OCRService ocrService;
 
 	@Autowired
 	MemberCardService memberCardService;
@@ -30,6 +30,10 @@ public class CardRestController {
 	// @GetMapping("/list")
 
 	// 카드 촬영 사진에 대한 ocr 데이터
+	@PostMapping("/cardOCR")
+	public void ocrService() {
+		ocrService.cardOCRService();
+	}
 
 	// 카드 정보 등록
 	@PostMapping("/cardRegister")

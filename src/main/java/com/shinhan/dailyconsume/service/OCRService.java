@@ -1,33 +1,57 @@
 package com.shinhan.dailyconsume.service;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 @Service
 public class OCRService {
 
-	@Value("$(CardClovaOCR_URL")
+	@Value("${CardClovaOCR_URL}")
 	private String cardOCRURL;
-	@Value("$(CardClovaOCR_SECRET_KEY")
+	@Value("${CardClovaOCR_SECRET_KEY}")
 	private String cardOCRKey;
 
-	@Value("$(ReciptClovaOCR_URL")
+	@Value("${ReciptClovaOCR_URL}")
 	private String reciptOCRURL;
-	@Value("$(ReciptClovaOCR_SECRET_KEY")
+	@Value("${ReciptClovaOCR_SECRET_KEY}")
 	private String reciptOCRKey;
+	
+	private final S3Client s3Client;
+	
+	@Autowired
+    public OCRService(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
 
 	public void cardOCRService() {
+		
+		String bucketName = "shinhands3rd-project2";
+		String keyName = "CardIMG/cardexample.jpg";
+		
 		try {
+			// S3에서 이미지 가져오기
+            String encodedString = getBase64EncodedFile(bucketName, keyName);
 
 			// 카드 OCR api 연결 설정
 			URL cardOCRurl = new URL(cardOCRURL);
@@ -54,7 +78,7 @@ public class OCRService {
 			JSONObject image = new JSONObject();
 			image.put("format", "jpg");
 			image.put("name", "medium");
-			image.put("url", "https://shinhands3rd-project2.s3.ap-southeast-2.amazonaws.com/CardIMG/cardexample.jpg");
+			image.put("data", encodedString);
 			images.add(image);
 
 			json.put("images", images);
@@ -82,6 +106,8 @@ public class OCRService {
 			while ((inputLine = br.readLine()) != null) {
 				response.append(inputLine);
 			}
+			
+			System.out.println(response);
 			br.close();
 
 		} catch (Exception e) {
@@ -118,7 +144,7 @@ public class OCRService {
 			JSONObject image = new JSONObject();
 			image.put("format", "jpg");
 			image.put("name", "medium");
-			image.put("url", "https://shinhands3rd-project2.s3.ap-southeast-2.amazonaws.com/CardIMG/cardexample.jpg");
+			image.put("data", "https://shinhands3rd-project2.s3.ap-southeast-2.amazonaws.com/CardIMG/cardexample.jpg");
 			images.add(image);
 
 			json.put("images", images);
@@ -153,4 +179,24 @@ public class OCRService {
 			e.printStackTrace();
 		}
 	}
+	
+	private String getBase64EncodedFile(String bucketName, String keyName) throws IOException {
+        try (ResponseInputStream<?> s3Object = s3Client.getObject(GetObjectRequest.builder()
+                .bucket(bucketName)
+                .key(keyName)
+                .build())) {
+
+            // 객체 데이터를 읽어 바이트 배열로 변환
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = s3Object.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+
+            // 바이트 배열을 Base64로 인코딩
+            byte[] fileContent = baos.toByteArray();
+            return Base64.getEncoder().encodeToString(fileContent);
+        }
+    }
 }
