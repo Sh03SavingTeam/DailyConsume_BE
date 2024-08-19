@@ -7,11 +7,12 @@ import lombok.ToString;
 @Data
 @Builder
 @ToString
-public class RecommentDTO {
+public class RecommendDTO {
 	private String storeRegNum;
 	private String storeName;
 	private String storeAddr;
 	private String storePhone;
 	private Double storeLatX;
 	private Double storeLonY;
+	private String storeImg;
 }

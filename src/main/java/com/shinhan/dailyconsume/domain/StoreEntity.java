@@ -31,6 +31,7 @@ public class StoreEntity {
 	private String storePhone;
 	private Double storeLatX;
 	private Double storeLonY;
+	private String storeImg;
 	
 	@OneToMany(mappedBy = "store"
 			, fetch = FetchType.LAZY)
@@ -39,4 +40,7 @@ public class StoreEntity {
 	@ManyToOne
 	@JoinColumn(name = "storeCateSeq")
 	StoreCategoryEntity storeCate;
+	
+	@OneToMany(mappedBy = "storeInfo", fetch = FetchType.LAZY)
+	private List<MenuEntity> menus;
 }
