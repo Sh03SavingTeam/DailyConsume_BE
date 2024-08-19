@@ -1,5 +1,7 @@
 package com.shinhan.dailyconsume.service;
 
+import java.util.List;
+
 import com.shinhan.dailyconsume.domain.CardEntity;
 import com.shinhan.dailyconsume.domain.MemberCardEntity;
 import com.shinhan.dailyconsume.domain.MemberEntity;
@@ -10,7 +12,9 @@ public interface MemberCardService {
 	//CRUD 작업 제공
 	//1.입력
 	String register(MemberCardDTO dto);
+	
 	//2.조회
+	List<MemberCardDTO> selectByMemberId(String memberId);
 	
 	//3.수정
 	

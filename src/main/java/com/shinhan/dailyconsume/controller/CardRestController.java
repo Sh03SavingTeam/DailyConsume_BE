@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shinhan.dailyconsume.domain.CardEntity;
+import com.shinhan.dailyconsume.domain.MemberCardEntity;
 import com.shinhan.dailyconsume.dto.CardOCRDTO;
 import com.shinhan.dailyconsume.dto.MemberCardDTO;
 import com.shinhan.dailyconsume.service.CardService;
@@ -94,7 +95,17 @@ public class CardRestController {
 		String cardNum = memberCardService.register(memberCardDTO);
 		return MemberCardDTO.builder().build();
 	}
+	
+	// 등록 카드 목록 조회
+	@GetMapping("/memberCardList")
+	public List<MemberCardDTO> getMemberCardList(@RequestParam String memberId){
+		List<MemberCardDTO> memberCardList = memberCardService.selectByMemberId(memberId);
+		
+		return memberCardList;
+	}
+	
 
+	//해당 카드 정보 삭제
 	@DeleteMapping("/cardDelete/{cardNum}")
 	public void cardDelete(@PathVariable("cardNum") String cardNum) {
 		memberCardService.delete(cardNum);

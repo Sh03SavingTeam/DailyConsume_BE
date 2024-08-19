@@ -47,9 +47,10 @@ public class OCRService {
 	public JSONObject cardOCRService(String fileName) {
 
 		String bucketName = "shinhands3rd-project2";
-		String keyName = "CardIMG/" + fileName;
-		//String keyName = "CardIMG/cardexample.jpg";
+		//String keyName = "CardIMG/"+fileName;
+		String keyName = "CardIMG/cardexample.jpg";
 		StringBuilder response = new StringBuilder();
+		System.out.println("사진 경로 : "+ bucketName+" "+keyName);
 
 		try {
 			// S3에서 이미지 가져오기

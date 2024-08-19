@@ -5,8 +5,14 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import com.shinhan.dailyconsume.domain.MemberCardEntity;
+import com.shinhan.dailyconsume.domain.MemberEntity;
+
+import java.util.List;
+
 
 public interface MemberCardRepository extends JpaRepository<MemberCardEntity, String>, 
 		QuerydslPredicateExecutor<MemberCardEntity> {
+	
+	List<MemberCardEntity> findByMember(MemberEntity member);
 	
 }
