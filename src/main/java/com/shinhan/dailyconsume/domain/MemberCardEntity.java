@@ -29,7 +29,7 @@ public class MemberCardEntity {
 	Long cvc;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cardId")
+	@JoinColumn(name="cardName")
 	private CardEntity card;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

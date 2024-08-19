@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class CardDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long cardId;
 	private String cardName;
 	private String cardImgUrl;
 	private String cardPageUrl;
+	private String cardType;
 }

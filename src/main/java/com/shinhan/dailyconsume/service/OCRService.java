@@ -11,8 +11,8 @@ import java.net.URL;
 import java.util.Base64;
 import java.util.UUID;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,26 +32,28 @@ public class OCRService {
 	@Value("${CardClovaOCR_SECRET_KEY}")
 	private String cardOCRKey;
 
-	@Value("${ReciptClovaOCR_URL}")
+	@Value("${ReceiptClovaOCR_URL}")
 	private String reciptOCRURL;
-	@Value("${ReciptClovaOCR_SECRET_KEY}")
+	@Value("${ReceiptClovaOCR_SECRET_KEY}")
 	private String reciptOCRKey;
-	
-	private final S3Client s3Client;
-	
-	@Autowired
-    public OCRService(S3Client s3Client) {
-        this.s3Client = s3Client;
-    }
 
-	public void cardOCRService() {
-		
+	private final S3Client s3Client;
+
+	@Autowired
+	public OCRService(S3Client s3Client) {
+		this.s3Client = s3Client;
+	}
+
+	public JSONObject cardOCRService(String fileName) {
+
 		String bucketName = "shinhands3rd-project2";
-		String keyName = "CardIMG/cardexample.jpg";
-		
+		String keyName = "CardIMG/" + fileName;
+		//String keyName = "CardIMG/cardexample.jpg";
+		StringBuilder response = new StringBuilder();
+
 		try {
 			// S3에서 이미지 가져오기
-            String encodedString = getBase64EncodedFile(bucketName, keyName);
+			String encodedString = getBase64EncodedFile(bucketName, keyName);
 
 			// 카드 OCR api 연결 설정
 			URL cardOCRurl = new URL(cardOCRURL);
@@ -79,7 +81,7 @@ public class OCRService {
 			image.put("format", "jpg");
 			image.put("name", "medium");
 			image.put("data", encodedString);
-			images.add(image);
+			images.put(image);
 
 			json.put("images", images);
 			String postParams = json.toString();
@@ -101,25 +103,35 @@ public class OCRService {
 			}
 
 			// 응답 읽기
-			StringBuilder response = new StringBuilder();
 			String inputLine;
 			while ((inputLine = br.readLine()) != null) {
 				response.append(inputLine);
 			}
-			
-			System.out.println(response);
+
+			// System.out.println(response);
 			br.close();
+			return new JSONObject(response.toString());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
+
 	}
 
-	public void reciptOCRService() {
-		try {
+	public JSONObject reciptOCRService(String fileName) {
 
-			// 카드 OCR api 연결 설정
+		String bucketName = "shinhands3rd-project2";
+		//String keyName = "ReceiptIMG/" + fileName;
+		String keyName = "ReceiptIMG/receiptex.jpg";
+		StringBuilder response = new StringBuilder();
+
+		try {
+			// S3에서 이미지 가져오기
+			String encodedString = getBase64EncodedFile(bucketName, keyName);
+
+			// 영수증 OCR api 연결 설정
 			URL cardOCRurl = new URL(reciptOCRURL);
 			HttpURLConnection con = (HttpURLConnection) cardOCRurl.openConnection();
 			con.setUseCaches(false);
@@ -144,8 +156,8 @@ public class OCRService {
 			JSONObject image = new JSONObject();
 			image.put("format", "jpg");
 			image.put("name", "medium");
-			image.put("data", "https://shinhands3rd-project2.s3.ap-southeast-2.amazonaws.com/CardIMG/cardexample.jpg");
-			images.add(image);
+			image.put("data", encodedString);
+			images.put(image);
 
 			json.put("images", images);
 			String postParams = json.toString();
@@ -167,36 +179,37 @@ public class OCRService {
 			}
 
 			// 응답 읽기
-			StringBuilder response = new StringBuilder();
 			String inputLine;
 			while ((inputLine = br.readLine()) != null) {
 				response.append(inputLine);
 			}
-			br.close();
 
-		} catch (Exception e) {
+			// System.out.println(response);
+			br.close();
+			return new JSONObject(response.toString());
+
+		}  catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 	}
-	
+
 	private String getBase64EncodedFile(String bucketName, String keyName) throws IOException {
-        try (ResponseInputStream<?> s3Object = s3Client.getObject(GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(keyName)
-                .build())) {
+		try (ResponseInputStream<?> s3Object = s3Client
+				.getObject(GetObjectRequest.builder().bucket(bucketName).key(keyName).build())) {
 
-            // 객체 데이터를 읽어 바이트 배열로 변환
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = s3Object.read(buffer)) != -1) {
-                baos.write(buffer, 0, bytesRead);
-            }
+			// 객체 데이터를 읽어 바이트 배열로 변환
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = s3Object.read(buffer)) != -1) {
+				baos.write(buffer, 0, bytesRead);
+			}
 
-            // 바이트 배열을 Base64로 인코딩
-            byte[] fileContent = baos.toByteArray();
-            return Base64.getEncoder().encodeToString(fileContent);
-        }
-    }
+			// 바이트 배열을 Base64로 인코딩
+			byte[] fileContent = baos.toByteArray();
+			return Base64.getEncoder().encodeToString(fileContent);
+		}
+	}
 }

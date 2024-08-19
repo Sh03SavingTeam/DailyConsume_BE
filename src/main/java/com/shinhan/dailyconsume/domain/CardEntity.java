@@ -1,7 +1,5 @@
 package com.shinhan.dailyconsume.domain;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +18,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class CardEntity {
 	@Id
-	Long cardId;
 	String cardName;
 	String cardImgUrl;
 	String cardPageUrl;
+	String cardType;
 }

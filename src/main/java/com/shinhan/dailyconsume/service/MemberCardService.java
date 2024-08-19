@@ -20,7 +20,8 @@ public interface MemberCardService {
 
 	default MemberCardEntity dtoToEntity(MemberCardDTO dto) {
 		MemberEntity member = MemberEntity.builder().memberId(dto.getMemberId()).build();
-		CardEntity card = CardEntity.builder().cardId(dto.getCardId()).build();
+		CardEntity card = CardEntity.builder().cardName(dto.getCardName()).build();
+		
 		MemberCardEntity memberCard = MemberCardEntity.builder()
 				.cardNum(dto.getCardNum())
 				.expirationDate(dto.getExpirationDate())
@@ -37,7 +38,7 @@ public interface MemberCardService {
 				.cardNum(entity.getCardNum())
 				.expirationDate(entity.getExpirationDate())
 				.cvc(entity.getCvc())
-				.cardId(entity.getCard().getCardId())
+				.cardName(entity.getCard().getCardName())
 				.memberId(entity.getMember().getMemberId())
 				.build();
 				
