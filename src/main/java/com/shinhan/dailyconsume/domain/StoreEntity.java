@@ -2,6 +2,7 @@ package com.shinhan.dailyconsume.domain;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -31,6 +32,7 @@ public class StoreEntity {
 	private String storePhone;
 	private Double storeLatX;
 	private Double storeLonY;
+	@Column(length = 400)
 	private String storeImg;
 	
 	@OneToMany(mappedBy = "store"
