@@ -32,6 +32,8 @@ public class SecurityConfig {
 			.invalidateHttpSession(true);
 		});
 		
+		http.csrf().disable();
+		
 		http.exceptionHandling(handling -> handling.accessDeniedPage("/auth/accessDenined"));
 		
 		http.csrf().disable();
