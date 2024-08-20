@@ -29,6 +29,6 @@ public class ReviewEntity {
 	private String paperImgUrl;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "storeRegNum")
+	@JoinColumn(name = "strRegNum")
 	private StoreEntity store;
 }

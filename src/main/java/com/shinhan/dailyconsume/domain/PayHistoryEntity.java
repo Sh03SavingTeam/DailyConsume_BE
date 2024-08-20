@@ -40,4 +40,11 @@ public class PayHistoryEntity {
 	@JoinColumn(name = "consume_id")
 	private ConsumeCategoryEntity consumeCategory;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cardNum")
+	private MemberCardEntity card;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="strRegNum")
+	private StoreEntity store;
 }
