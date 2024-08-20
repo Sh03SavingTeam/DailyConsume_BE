@@ -1,8 +1,6 @@
 package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -11,15 +9,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "t_card")
+@Table(name="t_card_benefit")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class CardEntity {
+public class CardBenefitEntity {
+
 	@Id
+	Long benefitId;
 	String cardName;
-	String cardImgUrl;
-	String cardPageUrl;
-	String cardType;
+	String benefit;
+	
 }
