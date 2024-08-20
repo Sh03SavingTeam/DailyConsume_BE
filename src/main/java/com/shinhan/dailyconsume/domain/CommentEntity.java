@@ -1,9 +1,11 @@
 package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,13 +22,13 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "comment")
+@Table(name = "t_comment")
 public class CommentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long commentId;
 	private String commentContent;
 	
-	//@ManyToOne(fetch = FetchType.LAZY)
-	//private MemberDTO memberId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private MemberEntity memberId;
 }

@@ -11,6 +11,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		
 		http
 		.authorizeHttpRequests(auth -> {
 			auth.requestMatchers("/**", "/").permitAll();
@@ -34,6 +35,10 @@ public class SecurityConfig {
 		http.csrf().disable();
 		
 		http.exceptionHandling(handling -> handling.accessDeniedPage("/auth/accessDenined"));
+		
+		http.csrf().disable();
+		
 		return http.build();
+		
 	}
 }

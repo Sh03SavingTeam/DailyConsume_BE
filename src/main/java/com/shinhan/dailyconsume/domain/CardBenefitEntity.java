@@ -9,15 +9,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "t_card")
+@Table(name="t_card_benefit")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class CardEntity {
+public class CardBenefitEntity {
+
 	@Id
+	Long benefitId;
 	String cardName;
-	String cardImgUrl;
-	String cardPageUrl;
-	String cardType;
+	String benefit;
+	
 }
