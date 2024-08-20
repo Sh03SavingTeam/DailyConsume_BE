@@ -1,10 +1,14 @@
 package com.shinhan.dailyconsume.domain;
 
-import java.sql.Date;import jakarta.persistence.CascadeType;
+import java.sql.Date;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,6 +32,10 @@ public class MemberEntity {
 	String memberGender;
 	Date memberBirth;
 	String memberAccount;
+	
+	@OneToMany(mappedBy="member", fetch = FetchType.LAZY)
+	List<MemberCardEntity> memberCards;
+	
 	
 	@OneToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "rankId")
