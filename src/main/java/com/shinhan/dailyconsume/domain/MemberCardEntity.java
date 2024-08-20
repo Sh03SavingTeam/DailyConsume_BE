@@ -3,9 +3,13 @@ package com.shinhan.dailyconsume.domain;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +25,14 @@ import lombok.NoArgsConstructor;
 public class MemberCardEntity {
 	@Id
 	String cardNum;
-	Timestamp expirationDate;
+	String expirationDate;
+	Long cvc;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cardName")
+	private CardEntity card;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="memberId")
+	private MemberEntity member;
 }
