@@ -14,7 +14,7 @@ public class SecurityConfig {
 		http
 		.authorizeHttpRequests(auth -> {
 			auth.requestMatchers("/**", "/").permitAll();
-			auth.anyRequest().authenticated();
+			auth.anyRequest().permitAll();
 		});
 		
         
@@ -30,6 +30,8 @@ public class SecurityConfig {
 			.logoutSuccessUrl("/auth/loginSuccess")
 			.invalidateHttpSession(true);
 		});
+		
+		http.csrf().disable();
 		
 		http.exceptionHandling(handling -> handling.accessDeniedPage("/auth/accessDenined"));
 		return http.build();
