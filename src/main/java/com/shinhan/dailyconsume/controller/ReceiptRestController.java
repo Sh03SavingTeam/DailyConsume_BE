@@ -57,7 +57,7 @@ public class ReceiptRestController {
 		ReceiptOCRDTO receiptOCRDTO = ReceiptOCRDTO.builder()
 				.name(name).addresses(address).bizNum(bizNum).build();
 		
-		//DTO 반환
+		
 		return receiptOCRDTO;
 
 	}

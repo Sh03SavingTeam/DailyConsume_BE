@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shinhan.dailyconsume.domain.CardEntity;
 import com.shinhan.dailyconsume.domain.MemberCardEntity;
+import com.shinhan.dailyconsume.dto.CardBenefitDTO;
+import com.shinhan.dailyconsume.dto.CardDTO;
 import com.shinhan.dailyconsume.dto.CardOCRDTO;
 import com.shinhan.dailyconsume.dto.MemberCardDTO;
+import com.shinhan.dailyconsume.service.CardBenefitService;
 import com.shinhan.dailyconsume.service.CardService;
 import com.shinhan.dailyconsume.service.MemberCardService;
 import com.shinhan.dailyconsume.service.OCRService;
@@ -40,7 +43,8 @@ public class CardRestController {
 	@Autowired
 	MemberCardService memberCardService;
 	
-	
+	@Autowired
+	CardBenefitService cardBenefitService;
 
 	// 로그인한 사용자의 카드 목록 조회
 	// @GetMapping("/list")
@@ -76,16 +80,37 @@ public class CardRestController {
 	
 	//체크카드 목록
 	@GetMapping("/checkCardList")
-	public List<CardEntity> getCheckCards(){
+	public List<CardDTO> getCheckCards(){
 		return cardService.getCheckCards();
 	}
 	
 	
 	//신용카드 목록
 	@GetMapping("/creditCardList")
-	public List<CardEntity> getCreditCards() {
+	public List<CardDTO> getCreditCards() {
 		return cardService.getCreditCards();
 	}
+	
+	//선택한 카드 정보(카드번호 -> 이미지, 카드명)
+	@GetMapping("/getCardInfo")
+	public CardDTO getCardInfo(@RequestParam String cardNum) {
+		System.out.println("전달받은 카드번호 : "+cardNum);
+		MemberCardDTO memberCardDTO = memberCardService.selectByCardNum(cardNum);
+		
+		String cardName = memberCardDTO.getCardName();
+		
+		return cardService.getCardInfo(cardName);
+	}
+	
+	//선택한 카드의 혜택 목록 조회(카드명 -> 혜택목록)
+	@GetMapping("/getCardBenefit")
+	public List<CardBenefitDTO> getCardBenefits(@RequestParam String cardName){
+		System.out.println("카드 이름 : "+cardName);
+		List<CardBenefitDTO> cardbenefitList = cardBenefitService.getCardBenefits(cardName);
+		
+		return cardbenefitList;
+	}
+	
 
 	// 카드 정보 등록
 	@PostMapping("/cardRegister")
@@ -106,8 +131,9 @@ public class CardRestController {
 	
 
 	//해당 카드 정보 삭제
-	@DeleteMapping("/cardDelete/{cardNum}")
-	public void cardDelete(@PathVariable("cardNum") String cardNum) {
+	@DeleteMapping("/delete")
+	public void cardDelete(@RequestParam String cardNum) {
+		System.out.println("삭제요청한 cardNum : "+cardNum);
 		memberCardService.delete(cardNum);
 	}
 }

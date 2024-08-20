@@ -15,4 +15,7 @@ public interface MemberCardRepository extends JpaRepository<MemberCardEntity, St
 	
 	List<MemberCardEntity> findByMember(MemberEntity member);
 	
+	MemberCardEntity findByCardNum(String cardNum);
+	
+	
 }

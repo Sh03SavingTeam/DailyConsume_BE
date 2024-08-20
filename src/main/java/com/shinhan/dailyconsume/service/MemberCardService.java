@@ -16,10 +16,11 @@ public interface MemberCardService {
 	//2.조회
 	List<MemberCardDTO> selectByMemberId(String memberId);
 	
-	//3.수정
+	//3.상세조회
+	MemberCardDTO selectByCardNum(String cardNum);
 	
 	//4.삭제
-	void delete(String card);
+	void delete(String cardNum);
 	
 
 	default MemberCardEntity dtoToEntity(MemberCardDTO dto) {

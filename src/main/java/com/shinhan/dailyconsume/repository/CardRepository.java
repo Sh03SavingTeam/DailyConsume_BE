@@ -13,4 +13,6 @@ import com.shinhan.dailyconsume.domain.CardEntity;
 public interface CardRepository extends JpaRepository<CardEntity, String>, QuerydslPredicateExecutor<CardEntity>{
 
 	List<CardEntity> findByCardType(String cardType);
+	
+	CardEntity findByCardName(String cardName);
 }

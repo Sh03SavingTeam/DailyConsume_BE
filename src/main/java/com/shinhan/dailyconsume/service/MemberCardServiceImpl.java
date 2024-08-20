@@ -35,9 +35,17 @@ public class MemberCardServiceImpl implements MemberCardService {
 		
 		return MemberCardlist;
 	}
+	
+	@Override
+	public MemberCardDTO selectByCardNum(String cardNum) {
+		MemberCardEntity memberCard = memberCardRepo.findByCardNum(cardNum);
+		return entityToDTO(memberCard);
+		
+	}
 
 	@Override
-	public void delete(String card) {
+	public void delete(String cardNum) {
+		memberCardRepo.deleteById(cardNum);
 		// TODO Auto-generated method stub
 		
 	}
