@@ -25,6 +25,7 @@ public class ReviewEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long reviewId;
 	private double rating;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "storeRegNum")
 	private StoreEntity store;

@@ -1,9 +1,11 @@
 package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,4 +24,7 @@ public class CardEntity {
 	String cardImgUrl;
 	String cardPageUrl;
 	String cardType;
+	
+	@OneToMany(mappedBy = "card", fetch=FetchType.LAZY)
+	private MemberCardEntity memberCard;
 }
