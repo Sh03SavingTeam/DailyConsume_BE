@@ -45,5 +45,5 @@ public class PayHistoryEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "strRegNum")
 	private StoreEntity stores;
-	
+
 }
