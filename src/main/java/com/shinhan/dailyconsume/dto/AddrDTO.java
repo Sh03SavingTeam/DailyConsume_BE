@@ -19,4 +19,5 @@ public class AddrDTO {
 	private String addrName;
 	private String addrDetail;
 	private String memberId;
+	private Integer addrDefault;
 }
