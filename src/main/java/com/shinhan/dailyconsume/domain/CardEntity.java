@@ -1,5 +1,7 @@
 package com.shinhan.dailyconsume.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,5 +28,5 @@ public class CardEntity {
 	String cardType;
 	
 	@OneToMany(mappedBy = "card", fetch=FetchType.LAZY)
-	private MemberCardEntity memberCard;
+	private List<MemberCardEntity> memberCards;
 }
