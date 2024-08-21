@@ -35,6 +35,7 @@ public class PayHistoryEntity {
 	private Timestamp payDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+<<<<<<< HEAD
 	@JoinColumn(name = "consumeId")
 	private ConsumeCategoryEntity consumeCategory;
 	
@@ -46,4 +47,17 @@ public class PayHistoryEntity {
 	@JoinColumn(name = "strRegNum")
 	private StoreEntity stores;
 	
+=======
+    @JoinColumn(name = "consumeId")
+    private ConsumeCategoryEntity consumeCategory;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cardNum")
+    private MemberCardEntity memberCard;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "strRegNum")
+    private StoreEntity stores;
+
+>>>>>>> branch 'MinYeongBE' of https://github.com/Sh03SavingTeam/DailyConsume_BE.git
 }

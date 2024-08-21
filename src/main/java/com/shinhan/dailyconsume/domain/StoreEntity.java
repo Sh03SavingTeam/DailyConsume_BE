@@ -35,7 +35,7 @@ public class StoreEntity {
 	@OneToMany(mappedBy = "store"
 			, fetch = FetchType.LAZY)
 	private List<ReviewEntity> review;
-
+	
 	@OneToOne
 	@JoinColumn(name = "storeCateSeq")
 	StoreCategoryEntity storeCate;
@@ -43,4 +43,8 @@ public class StoreEntity {
 	@OneToMany(mappedBy = "stores"
 			, fetch = FetchType.LAZY)
 	private List<PayHistoryEntity> payHistories;
+
+	@OneToMany(mappedBy = "storeInfo", fetch = FetchType.LAZY)
+	private List<MenuEntity> menus;
+
 }
