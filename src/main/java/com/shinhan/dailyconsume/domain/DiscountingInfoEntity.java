@@ -26,10 +26,10 @@ public class DiscountingInfoEntity {
 	
 	private String productName;
 	
-	private int amount;
+	private String amount;
 	
-	private String prductContent;
-	
+	private String productContent;
+
 	private String productCategory;
 	
 	private String prodImg;

@@ -1,6 +1,7 @@
 package com.shinhan.dailyconsume.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,4 +36,8 @@ public class MemberCardEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="memberId")
 	private MemberEntity member;
+	
+
+	@OneToMany(mappedBy = "memberCard", fetch = FetchType.LAZY)
+	private List<PayHistoryEntity> payHistories;
 }

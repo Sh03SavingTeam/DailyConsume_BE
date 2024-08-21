@@ -36,4 +36,8 @@ public class StoreEntity {
 	@OneToOne
 	@JoinColumn(name = "storeCateSeq")
 	StoreCategoryEntity storeCate;
+	
+	@OneToMany(mappedBy = "stores"
+			, fetch = FetchType.LAZY)
+	private List<PayHistoryEntity> payHistories;
 }
