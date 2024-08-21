@@ -23,11 +23,14 @@ import lombok.NoArgsConstructor;
 public class StoreEntity {
 	
 	@Id
-	private String storeRegNum;
-	
+	private String strRegNum;
+
 	private String storeName;
 	private String storeAddr;
-	private String storephone;
+	private String storePhone;
+	private Double storeLatX;
+	private Double storeLatY;
+	private String storeImg;
 	
 	@OneToMany(mappedBy = "store"
 			, fetch = FetchType.LAZY)
