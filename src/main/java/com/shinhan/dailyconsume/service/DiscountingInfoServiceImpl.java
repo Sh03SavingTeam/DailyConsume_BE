@@ -33,16 +33,6 @@ public class DiscountingInfoServiceImpl implements DiscountingInfoService {
 			int categoryId = (Integer) result.get(0)[1];
 
 			//카테고리별 맞춤 할인 정보 구하기
-			switch (categoryId) {
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-			}
 			//return
 		}
 
