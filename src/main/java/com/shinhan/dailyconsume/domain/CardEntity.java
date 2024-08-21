@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class CardEntity {
+	
 	@Id
 	String cardName;
 	String cardImgUrl;

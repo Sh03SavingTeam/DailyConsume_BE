@@ -9,21 +9,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shinhan.dailyconsume.domain.MenuEntity;
 import com.shinhan.dailyconsume.domain.StoreCategoryEntity;
 import com.shinhan.dailyconsume.domain.StoreEntity;
-import com.shinhan.dailyconsume.dto.map.MenuDTO;
 import com.shinhan.dailyconsume.dto.store.JsonMenuDTO;
 import com.shinhan.dailyconsume.dto.store.StoreDTO;
 import com.shinhan.dailyconsume.repository.MenuRepository;
 import com.shinhan.dailyconsume.repository.StoreCategoryRepository;
 import com.shinhan.dailyconsume.repository.StoreRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 //@Component
 public class DataLoader implements CommandLineRunner {
