@@ -22,10 +22,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class MenuEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long menuId;
 	private String menuName;
+	
 	@Column(length = 500)
 	private String menuImg;
 	private Long menuPrice;
