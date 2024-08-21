@@ -25,13 +25,13 @@ import lombok.NoArgsConstructor;
 public class StoreEntity {
 	
 	@Id
-	private String strRegNum;
+	private String storeRegNum;
 
 	private String storeName;
 	private String storeAddr;
 	private String storePhone;
 	private Double storeLatX;
-	private Double storeLatY;
+	private Double storeLonY;
 	@Column(length = 400)
 	private String storeImg;
 	
