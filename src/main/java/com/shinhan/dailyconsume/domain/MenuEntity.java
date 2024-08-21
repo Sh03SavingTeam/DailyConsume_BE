@@ -1,6 +1,7 @@
 package com.shinhan.dailyconsume.domain;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,11 +26,13 @@ public class MenuEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long menuId;
 	private String menuName;
-	private Long menuPrice;
+	@Column(length = 500)
 	private String menuImg;
+	private Long menuPrice;
+
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "storeRegNum")
 	StoreEntity storeInfo;
-	
+
 }

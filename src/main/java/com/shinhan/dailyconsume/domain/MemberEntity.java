@@ -3,7 +3,6 @@ package com.shinhan.dailyconsume.domain;
 import java.sql.Date;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -32,6 +31,7 @@ public class MemberEntity {
 	String memberGender;
 	Date memberBirth;
 	String memberAccount;
+	Long pointAmount;
 	
 	@OneToMany(mappedBy="member", fetch = FetchType.LAZY)
 	List<MemberCardEntity> memberCards;
@@ -41,5 +41,6 @@ public class MemberEntity {
 	@JoinColumn(name = "rankId")
 	RankEntity rank;
 	
-	Long pointAmount;
+	
+	
 }

@@ -2,10 +2,12 @@ package com.shinhan.dailyconsume.domain;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -30,13 +32,14 @@ public class StoreEntity {
 	private String storePhone;
 	private Double storeLatX;
 	private Double storeLatY;
+	@Column(length = 400)
 	private String storeImg;
 	
 	@OneToMany(mappedBy = "store"
 			, fetch = FetchType.LAZY)
 	private List<ReviewEntity> review;
-	
-	@OneToOne
+
+	@ManyToOne
 	@JoinColumn(name = "storeCateSeq")
 	StoreCategoryEntity storeCate;
 	
@@ -48,3 +51,4 @@ public class StoreEntity {
 	private List<MenuEntity> menus;
 
 }
+
