@@ -1,6 +1,7 @@
 package com.shinhan.dailyconsume.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class AlarmEntity {
 	
 	private String content;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "payId")
 	private PayHistoryEntity payHistory;
 	

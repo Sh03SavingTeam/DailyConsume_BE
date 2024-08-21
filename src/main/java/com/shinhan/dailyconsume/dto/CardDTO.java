@@ -1,7 +1,5 @@
 package com.shinhan.dailyconsume.dto;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
