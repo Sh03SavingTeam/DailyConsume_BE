@@ -27,6 +27,6 @@ public class ReviewEntity {
 	private double rating;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "storeRegNum")
+	@JoinColumn(name = "strRegNum")
 	private StoreEntity store;
 }
