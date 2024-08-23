@@ -2,6 +2,7 @@ package com.shinhan.dailyconsume.service;
 
 import com.shinhan.dailyconsume.domain.MemberEntity;
 import com.shinhan.dailyconsume.domain.PointHistoryEntity;
+import com.shinhan.dailyconsume.dto.PointAccountDTO;
 import com.shinhan.dailyconsume.dto.PointDTO;
 import com.shinhan.dailyconsume.dto.PointHistoryDTO;
 import com.shinhan.dailyconsume.repository.MemberRepository;
@@ -45,6 +46,7 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         //총 내역 개수
         int historyCount = pointHistories.size();
 
+        //페이징
         List<PointHistoryDTO> pagingHistories=new ArrayList<>();
 
         int startIndex = (int) pageable.getOffset();
@@ -59,5 +61,13 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         PointDTO pointDTO = new PointDTO(totalPoint, historyCount, pagingHistories);
 
         return pointDTO;
+    }
+
+    @Override
+    public PointAccountDTO getPointAccount(String memberId) {
+        //회원 정보 조회
+        MemberEntity member = mRepo.findByMemberId(memberId);
+        PointAccountDTO pointAccountDTO = new PointAccountDTO(member.getPointAmount().intValue(), member.getMemberAccount());
+        return pointAccountDTO;
     }
 }
