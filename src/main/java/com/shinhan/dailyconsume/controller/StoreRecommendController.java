@@ -3,10 +3,13 @@ package com.shinhan.dailyconsume.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shinhan.dailyconsume.dto.store.StoreDTO;
 import com.shinhan.dailyconsume.service.map.RecommendService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,5 +29,11 @@ public class StoreRecommendController {
 	@GetMapping("/detail")
 	public ResponseEntity<Object> StoreDetail(@RequestParam String storeRegNum) {
 		return ResponseEntity.ok(recommenService.getStoreDetail(storeRegNum));
+	}
+	
+	@PutMapping("/updateStore")
+	public ResponseEntity<Object> storeUpdate(@RequestBody StoreDTO storeDto) {
+		recommenService.updateStore(storeDto);
+		return ResponseEntity.ok("갱신 완료");
 	}
 }

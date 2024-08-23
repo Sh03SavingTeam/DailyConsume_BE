@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 //나의 소비 dto
 public class PayHistoryDTO {
 	
@@ -38,6 +39,6 @@ public class PayHistoryDTO {
 		this.consumeCategory = consumeCategory;
 	}
 	
-	
-	
+	  
+    
 }

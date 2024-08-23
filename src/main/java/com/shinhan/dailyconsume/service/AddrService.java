@@ -19,19 +19,22 @@ public interface AddrService {
 
 	// 3.삭제
 	void deleteAddr(Long addrId);
+	
+	//4.기본 주소 선택
+	void addrUpdate(AddrDTO dto);
 
 	default AddressEntity dtoToEntity(AddrDTO dto) {
 		MemberEntity member = MemberEntity.builder().memberId(dto.getMemberId()).build();
 
 		AddressEntity address = AddressEntity.builder().addrId(dto.getAddrId()).addrName(dto.getAddrName())
-				.addrDetail(dto.getAddrDetail()).member(member).build();
+				.addrDetail(dto.getAddrDetail()).addrDefault(dto.getAddrDefault()).member(member).build();
 
 		return address;
 	}
 
 	default AddrDTO entityToDTO(AddressEntity entity) {
 		AddrDTO dto = AddrDTO.builder().addrId(entity.getAddrId()).addrName(entity.getAddrName())
-				.addrDetail(entity.getAddrDetail()).memberId(entity.getMember().getMemberId()).build();
+				.addrDetail(entity.getAddrDetail()).addrDefault(entity.getAddrDefault()).memberId(entity.getMember().getMemberId()).build();
 
 		return dto;
 	}

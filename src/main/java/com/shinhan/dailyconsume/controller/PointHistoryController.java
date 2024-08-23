@@ -1,5 +1,6 @@
 package com.shinhan.dailyconsume.controller;
 
+import com.shinhan.dailyconsume.dto.PointAccountDTO;
 import com.shinhan.dailyconsume.dto.PointDTO;
 import com.shinhan.dailyconsume.service.PointHistoryService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,15 @@ public class PointHistoryController {
         if(pointDTO==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.ok(phService.getPointByMember(pageable, memberId));
+        return ResponseEntity.ok(pointDTO);
+    }
+
+    @GetMapping("/mypage/refund/{memberId}")
+    public ResponseEntity<Object> getPointAccount(@PathVariable("memberId") String memberId){
+        PointAccountDTO pointAccountDTO = phService.getPointAccount(memberId);
+        if(pointAccountDTO==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(pointAccountDTO);
     }
 }

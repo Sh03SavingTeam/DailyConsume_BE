@@ -11,5 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class DiscountingDTO {
     private String category;
+    private int totalCount;
     private List<DiscountingInfoDTO> discountingInfoList;
 }
