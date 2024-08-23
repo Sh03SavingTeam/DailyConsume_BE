@@ -49,5 +49,5 @@ public class PayHistoryEntity {
     private StoreEntity stores;
     
     private int myPayCheck;
-
+    
 }

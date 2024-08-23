@@ -1,7 +1,6 @@
 package com.shinhan.dailyconsume.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,10 +64,10 @@ public class CalendarController {
             @RequestParam("month") int month,
             @RequestParam("year") int year) {
         
-        List<CalendarDTO> payHistoryDetailList = calendarService.getPayHistoryByDayMonthAndYear(memberId, day, month, year);
-        System.out.println("[" + memberId + "] 조회된 결제 내역 (연도: " + year + ", 월: " + month + ", 일: " + day + "): " + payHistoryDetailList);
+        List<CalendarDTO> payHistoryDailyList = calendarService.getPayHistoryByDayMonthAndYear(memberId, day, month, year);
+        System.out.println("[" + memberId + "] 조회된 결제 내역 (연도: " + year + ", 월: " + month + ", 일: " + day + "): " + payHistoryDailyList);
         
-        return ResponseEntity.ok(payHistoryDetailList);
+        return ResponseEntity.ok(payHistoryDailyList);
     }
     
  
@@ -77,14 +76,14 @@ public class CalendarController {
     public ResponseEntity<CalendarDTO> getPayHistoryDetail(
             @RequestParam("memberId") String memberId,
             @RequestParam("payId") Long payId) {
-    	System.out.println(memberId + payId);
-        CalendarDTO payHistoryDetail = calendarService.getPayHistoryDetail(memberId, payId);
-        if (payHistoryDetail == null) {
-            return ResponseEntity.notFound().build();
-        } 
-        System.out.println(payHistoryDetail);
-        return ResponseEntity.ok(payHistoryDetail);
         
+        CalendarDTO dto = calendarService.getPayHistoryDetail(memberId, payId);
+        
+        if (dto != null) {
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
     
     // 결제 내역 등록
@@ -96,30 +95,14 @@ public class CalendarController {
 	
     // 이상&정상 결제 처리 수정 엔드포인트
     @PostMapping("/payhistory/update")
-    public ResponseEntity<Void> updateMyPayCheck(
-            @RequestParam("memberId") String memberId,
-            @RequestParam("payId") Long payId,
-            @RequestParam("myPayCheck") Integer myPayCheck) {
+    public ResponseEntity<String> updateMyPayCheck(@RequestParam("memberId") String memberId,
+                                                   @RequestParam("payId") Long payId,
+                                                   @RequestParam("myPayCheck") Integer myPayCheck) {
         boolean updated = calendarService.updateMyPayCheck(memberId, payId, myPayCheck);
         if (updated) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Update successful");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Update failed");
         }
-    }
-    
-    
-
-//    @PostMapping("/payhistory/update")
-//    public ResponseEntity<String> updateMyPayCheck(
-//            @RequestBody UpdatePayCheckRequest request) {
-//        
-//        boolean isUpdated = calendarService.updateMyPayCheck(request.getMemberId(), request.getPayId(), request.getMyPayCheck());
-//        
-//        if (isUpdated) {
-//            return ResponseEntity.ok("Update successful");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update failed");
-//        }
-//    }
+    }    
 }
