@@ -71,4 +71,7 @@ public interface RankHistoryRepository extends JpaRepository<RankHistoryEntity, 
 		        totalAmount DESC
 		    """, nativeQuery = true)
 	    List<AddressRankingProjection> getRankingByAddress(@Param("memberId") String memberId);
+
+		
+
 }

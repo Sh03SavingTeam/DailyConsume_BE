@@ -5,15 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.shinhan.dailyconsume.domain.MemberEntity;
+import com.shinhan.dailyconsume.domain.RankEntity;
 import com.shinhan.dailyconsume.domain.RankHistoryEntity;
 import com.shinhan.dailyconsume.dto.mypage.AddressRankingProjection;
 import com.shinhan.dailyconsume.dto.mypage.RankDTO;
+import com.shinhan.dailyconsume.dto.mypage.RankHistoryInfoDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingProjection;
 import com.shinhan.dailyconsume.repository.MemberRepository;
 import com.shinhan.dailyconsume.repository.RankHistoryRepository;
 import com.shinhan.dailyconsume.repository.RankRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -53,11 +56,15 @@ public class RankServiceImpl implements RankService{
 
 
 	@Override
-	public String register(Long score, String coment, String memberId) {
+	@Transactional
+	public String register(RankHistoryInfoDTO rankHistoryInfoDTO) {
 		
-		Long amount = score;
-		String cmt = coment;
-		MemberEntity member = memberRepo.findByMemberId(memberId);
+		Long amount = rankHistoryInfoDTO.getScore();
+		String cmt = rankHistoryInfoDTO.getComent();
+		
+		
+		MemberEntity member = memberRepo.findById(rankHistoryInfoDTO.getMemberId()).orElse(null);
+		RankEntity memberRank = member.getRank();
 		
 		RankHistoryEntity rankHistory = RankHistoryEntity.builder()
                 .amount(amount)
@@ -65,8 +72,29 @@ public class RankServiceImpl implements RankService{
                 .member(member)
                 .build();
 		
-		RankHistoryEntity rhEntity = rHistoryRepo.save(rankHistory);
-		return "지급 성공";
+		rHistoryRepo.save(rankHistory);
+		
+		Long totalScore = Long.valueOf(rHistoryRepo.getTotalScore(rankHistoryInfoDTO.getMemberId()));
+		
+		List<RankEntity> rankInfoList = rankRepo.findAll();
+		
+		System.out.println("++++++++++++++++++++member+++++++++++++++++: " + member);
+		System.out.println("------------------------total----------------------: " + totalScore);
+		for(int i = rankInfoList.size() - 1; i >= 0; i--) {
+		    RankEntity rankInfo = rankInfoList.get(i);
+		    
+		    if(memberRank.getRankId() == rankInfoList.get(rankInfoList.size() - 1).getRankId()) {
+		        return "지급 성공";
+		    }
+		    
+		    if(rankInfo.getScore() <= totalScore 
+		    		&& rankInfo.getRankId() > memberRank.getRankId()) {
+		        memberRepo.updateRank(rankInfo, member.getMemberId());
+		        return "지급 성공";
+		    }
+		}
+		
+		return "===";
 	}
 
 

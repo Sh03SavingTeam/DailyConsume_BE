@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shinhan.dailyconsume.dto.mypage.AddressRankingProjection;
 import com.shinhan.dailyconsume.dto.mypage.RankDTO;
+import com.shinhan.dailyconsume.dto.mypage.RankHistoryInfoDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingProjection;
 import com.shinhan.dailyconsume.service.RankService;
@@ -41,7 +43,7 @@ public class RankController {
 	}
 	
 	@PostMapping("/scoreTest")
-	public String register(Long score, String coment, String memberId) {
-		return rankService.register(score, coment, memberId);
+	public String register(@RequestBody RankHistoryInfoDTO rankHistoryInfoDTO) {
+		return rankService.register(rankHistoryInfoDTO);
 	}
 }
