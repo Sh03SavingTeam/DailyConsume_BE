@@ -2,6 +2,7 @@ package com.shinhan.dailyconsume.calendar;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import com.shinhan.dailyconsume.domain.ConsumeCategoryEntity;
 import com.shinhan.dailyconsume.domain.MemberCardEntity;
 import com.shinhan.dailyconsume.domain.PayHistoryEntity;
 import com.shinhan.dailyconsume.domain.StoreEntity;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CalendarService {
@@ -48,39 +51,70 @@ public class CalendarService {
         return newPayHistoryEntity.getPayId();
     }
 
-	// 일별 결제 내역 상세 조회 메서드
-    public CalendarDTO getPayHistoryDetail(String memberId, Long payId) {
-        PayHistoryEntity payHistory = calendarRepo.findByMemberIdAndPayId(memberId, payId);
-        return payHistory != null ? entityToDTO(payHistory) : null;
-    }
-	
-    // 이상&정상 결제 처리 수정
-    public boolean updateMyPayCheck(String memberId, Long payId, Integer myPayCheck) {
-        try {
-            PayHistoryEntity payHistory = calendarRepo.findByMemberIdAndPayId(memberId, payId);
-            if (payHistory != null) {
-                payHistory.setMyPayCheck(myPayCheck);
-                calendarRepo.save(payHistory);
-                return true;
+	// 일별 결제 내역 상세 조회 메서드	
+	public CalendarDTO getPayHistoryDetail(String memberId, Long payId) {
+        Map<String, Object> result = calendarRepo.findPayHistoryDetailWithMenu(payId, memberId);
+
+        if (result != null) {
+            CalendarDTO dto = new CalendarDTO();
+            for(String columName : result.keySet()) {
+            	 if(columName.equals("pay_id")) dto.setPayId((Long) result.get(columName));
+            	 if(columName.equals("pay_amount"))dto.setPayAmount((Long) result.get(columName));
+            	 if(columName.equals("pay_date"))dto.setPayDate((Timestamp) result.get(columName));
+            	 if(columName.equals("consume_name"))dto.setConsumeCategory((String) result.get(columName));
+            	 if(columName.equals("card_num"))dto.setCardNum((String) result.get(columName));
+            	 if(columName.equals("card_name"))dto.setCardName((String) result.get(columName));
+            	 if(columName.equals("store_reg_num"))dto.setStoreRegNum((String) result.get(columName));
+            	 if(columName.equals("store_name"))dto.setStoreName((String) result.get(columName));
+            	 if(columName.equals("my_pay_check"))dto.setMyPayCheck((Integer) result.get(columName));
+            	 if(columName.equals("menu_name"))dto.setMenuName((String) result.get(columName));
             }
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            return dto;
         }
+        return null;
     }
-	
-	// entity를 dto로 변환
-    private CalendarDTO entityToDTO(PayHistoryEntity entity) {
+    
+    // 이상&정상 결제 처리 수정
+	/**
+     * 특정 결제 내역의 myPayCheck 값을 업데이트합니다.
+     *
+     * @param memberId   회원 ID
+     * @param payId      결제 ID
+     * @param myPayCheck 업데이트할 myPayCheck 값 (1: 정상 결제, 0: 이상 결제)
+     * @return 업데이트 성공 여부 (true: 성공, false: 실패)
+     */
+	@Transactional
+	public boolean updateMyPayCheck(String memberId, Long payId, Integer myPayCheck) {
+	    try {
+	        PayHistoryEntity payHistory = calendarRepo.findByMemberCardMemberMemberIdAndPayId(memberId, payId);
+	        if (payHistory != null) {
+	            payHistory.setMyPayCheck(myPayCheck);
+	            calendarRepo.save(payHistory);  // save 메서드 호출 시 사용되는 객체는 calendarRepo입니다.
+	            System.out.println("Updated myPayCheck to " + myPayCheck + " for payId: " + payId);
+	            return true;
+	        } else {
+	            System.out.println("PayHistoryEntity not found for memberId: " + memberId + " and payId: " + payId);
+	        }
+	        return false;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+
+    
+    // entity를 dto로 변환
+    public CalendarDTO entityToDTO(PayHistoryEntity entity) {
         return CalendarDTO.builder()
                 .payId(entity.getPayId())
                 .payAmount(entity.getPayAmount())
                 .payDate(entity.getPayDate())
                 .consumeCategory(entity.getConsumeCategory().getConsumeName())
-                .cardNum(entity.getMemberCard() != null ? entity.getMemberCard().getCardNum() : null)
-                .storeRegNum(entity.getStores() != null ? entity.getStores().getStoreRegNum() : null)
-                .storeName(entity.getStores() != null ? entity.getStores().getStoreName() : null)
-                .myPayCheck(entity.getMyPayCheck()) // 본인 결제 여부 추가
+                .cardNum(entity.getMemberCard().getCardNum())
+                .storeRegNum(entity.getStores().getStoreRegNum())
+                .storeName(entity.getStores().getStoreName())
+                .myPayCheck(entity.getMyPayCheck())                
                 .build();
     }
 
@@ -101,6 +135,5 @@ public class CalendarService {
                 .stores(store)
                 .myPayCheck(dto.getMyPayCheck()) // 본인 결제 여부 추가
                 .build();
-    }
-	
+    }	
 }
