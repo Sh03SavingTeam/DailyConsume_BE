@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.shinhan.dailyconsume.domain.RankHistoryEntity;
+import com.shinhan.dailyconsume.dto.mypage.AddressRankingDTO;
+import com.shinhan.dailyconsume.dto.mypage.AddressRankingProjection;
 import com.shinhan.dailyconsume.dto.mypage.RankingDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingProjection;
 
@@ -33,5 +35,40 @@ public interface RankHistoryRepository extends JpaRepository<RankHistoryEntity, 
 	        "ORDER BY totalAmount DESC", 
 	        nativeQuery = true)
 	List<RankingProjection> getAllRanking();
-
+	
+	@Query(value = """
+		    SELECT 
+		        m.member_id AS memberId,
+		        m.member_name AS memberName,
+		        r.rank_id AS rankId,
+		        SUM(rh.amount) AS totalAmount,
+		        a.addr_id AS addrId,
+		        a.addr_detail AS addrDetail,
+		        ROW_NUMBER() OVER (ORDER BY SUM(rh.amount) DESC) AS rankNum
+		    FROM
+		        t_member m
+		        INNER JOIN t_address a ON m.member_id = a.member_id
+		        INNER JOIN t_rank_history rh ON m.member_id = rh.member_id
+		        INNER JOIN t_rank r ON m.rank_id = r.rank_id
+		    WHERE
+		        a.addr_detail = (
+		            SELECT addr_detail 
+		            FROM t_address 
+		            WHERE member_id = :memberId
+		            AND addr_default = 1
+		            LIMIT 1
+		        )
+		        AND a.addr_default = 1
+		        AND DATE_FORMAT(rh.rank_reg_date, '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m')
+		    GROUP BY 
+		        m.member_id,
+		        m.member_name,
+		        r.rank_id,
+		        r.rank_name,
+		        a.addr_id,
+		        a.addr_detail
+		    ORDER BY 
+		        totalAmount DESC
+		    """, nativeQuery = true)
+	    List<AddressRankingProjection> getRankingByAddress(@Param("memberId") String memberId);
 }
