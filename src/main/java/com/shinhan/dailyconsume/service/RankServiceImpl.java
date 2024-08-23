@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.shinhan.dailyconsume.domain.MemberEntity;
+import com.shinhan.dailyconsume.domain.RankHistoryEntity;
+import com.shinhan.dailyconsume.dto.mypage.AddressRankingProjection;
 import com.shinhan.dailyconsume.dto.mypage.RankDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingProjection;
@@ -45,8 +47,35 @@ public class RankServiceImpl implements RankService{
 	@Override
 	public List<RankingProjection> getAllRanking() {
 		List<RankingProjection> rlist = rHistoryRepo.getAllRanking();
-		System.out.println(rlist);
+		//System.out.println(rlist);
 		return rlist;
 	}
+
+
+	@Override
+	public String register(Long score, String coment, String memberId) {
+		
+		Long amount = score;
+		String cmt = coment;
+		MemberEntity member = memberRepo.findByMemberId(memberId);
+		
+		RankHistoryEntity rankHistory = RankHistoryEntity.builder()
+                .amount(amount)
+                .cmt(cmt)
+                .member(member)
+                .build();
+		
+		RankHistoryEntity rhEntity = rHistoryRepo.save(rankHistory);
+		return "지급 성공";
+	}
+
+
+	@Override
+	public List<AddressRankingProjection> getRankingByAddress(String memberId) {
+		List<AddressRankingProjection> arlist = rHistoryRepo.getRankingByAddress(memberId);
+		return arlist;
+	}
+	
+	
 
 }

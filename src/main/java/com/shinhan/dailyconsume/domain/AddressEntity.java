@@ -30,6 +30,7 @@ public class AddressEntity {
 	private Long addrId;
 	private String addrName;
 	private String addrDetail;
+	private Integer addrDefault;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="memberId")
