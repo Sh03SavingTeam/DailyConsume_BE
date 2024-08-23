@@ -2,6 +2,8 @@ package com.shinhan.dailyconsume.dto.map;
 
 import java.util.List;
 
+import com.shinhan.dailyconsume.domain.MenuEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +21,6 @@ public class StoreDetailDTO {
 	private Double storeLatX;
 	private Double storeLonY;
 	private String storeImg;
+	private String storeCate;
 	private List<MenuDTO> menus;
 }
