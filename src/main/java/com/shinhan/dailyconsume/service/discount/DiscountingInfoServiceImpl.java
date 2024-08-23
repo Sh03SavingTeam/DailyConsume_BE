@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.service;
+package com.shinhan.dailyconsume.service.discount;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.shinhan.dailyconsume.domain.ConsumeCategoryEntity;
-import com.shinhan.dailyconsume.dto.DiscountingDTO;
+import com.shinhan.dailyconsume.dto.discount.DiscountingDTO;
 import com.shinhan.dailyconsume.dto.PayHistoryDTO;
 import com.shinhan.dailyconsume.repository.ConsumeCategoryRepository;
+import com.shinhan.dailyconsume.service.PayHistoryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.shinhan.dailyconsume.dto.DiscountingInfoDTO;
+import com.shinhan.dailyconsume.dto.discount.DiscountingInfoDTO;
 import com.shinhan.dailyconsume.repository.DiscountingInfoRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class DiscountingInfoServiceImpl implements DiscountingInfoService {
 	private final ConsumeCategoryRepository cRepo;
 	private final PayHistoryService pService;
 
-	//할인 정보 조회
+	// 회원별 맞춤 할인 정보 가져오기
 	@Override
 	public DiscountingDTO getDiscountingInfos(Pageable pageable, String memberId) {
 

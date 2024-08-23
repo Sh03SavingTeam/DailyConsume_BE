@@ -13,5 +13,5 @@ public interface PointHistoryRepository extends JpaRepository<PointHistoryEntity
     @Query("SELECT SUM(p.amount) FROM PointHistoryEntity p WHERE p.member = :member and p.divNum=0")
     Long getTotalPointByMember(@Param("member") MemberEntity member);
 
-    List<PointHistoryEntity> findPointHistoryByMember(MemberEntity member);
+    List<PointHistoryEntity> findByMemberOrderByPointRegDateDesc(MemberEntity member);
 }
