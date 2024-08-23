@@ -25,6 +25,15 @@ public class AddrServiceImpl implements AddrService {
 		AddressEntity newaddressEntity = addrRepo.save(dtoToEntity(dto));
 		return newaddressEntity.getAddrName();
 	}
+	
+	@Override
+	public void addrUpdate(AddrDTO dto) {
+		addrRepo.findById(dto.getAddrId()).ifPresent(en->{
+			en.setAddrDefault(dto.getAddrDefault());
+			addrRepo.save(en);
+		});
+		
+	}
 
 	public List<AddrDTO> getAddrList(String memberId) {
 		MemberEntity member = memberRepo.findById(memberId).orElse(null);

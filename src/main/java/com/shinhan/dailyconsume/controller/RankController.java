@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shinhan.dailyconsume.dto.mypage.AddressRankingProjection;
 import com.shinhan.dailyconsume.dto.mypage.RankDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingProjection;
@@ -25,9 +27,21 @@ public class RankController {
 	public RankDTO rankInfo(@PathVariable("memberId") String memberId) {
 		return rankService.getRankInfo(memberId);
 	}
-	
+	@GetMapping("/benefits/{memberId}")
+	public RankDTO rankInfoBenefit(@PathVariable("memberId") String memberId) {
+		return rankService.getRankInfo(memberId);
+	}
 	@GetMapping("/ranking")
 	public List<RankingProjection> rlist(){
 		return rankService.getAllRanking();
+	}
+	@GetMapping("/aranking/{memberId}")
+	public List<AddressRankingProjection> getRankingByAddress(@PathVariable("memberId") String memberId) {
+		return rankService.getRankingByAddress(memberId);
+	}
+	
+	@PostMapping("/scoreTest")
+	public String register(Long score, String coment, String memberId) {
+		return rankService.register(score, coment, memberId);
 	}
 }

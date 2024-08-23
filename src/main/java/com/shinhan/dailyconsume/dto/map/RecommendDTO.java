@@ -15,4 +15,5 @@ public class RecommendDTO {
 	private Double storeLatX;
 	private Double storeLonY;
 	private String storeImg;
+	private String cate;
 }

@@ -13,4 +13,5 @@ public interface PayHistoryRepository extends JpaRepository<PayHistoryEntity, Lo
 
 	List<PayHistoryEntity> findByMemberCard(MemberCardEntity memberCard);
 
+   
 }
