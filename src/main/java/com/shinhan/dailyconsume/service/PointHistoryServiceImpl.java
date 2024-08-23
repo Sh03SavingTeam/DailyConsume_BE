@@ -67,7 +67,30 @@ public class PointHistoryServiceImpl implements PointHistoryService{
     public PointAccountDTO getPointAccount(String memberId) {
         //회원 정보 조회
         MemberEntity member = mRepo.findByMemberId(memberId);
+
         PointAccountDTO pointAccountDTO = new PointAccountDTO(member.getPointAmount().intValue(), member.getMemberAccount());
         return pointAccountDTO;
+    }
+
+    @Override
+    public String pointToCash(String memberId, int point) {
+        //회원 정보 조회
+        MemberEntity member = mRepo.findByMemberId(memberId);
+
+        //회원 포인트 양 업데이트
+        Long newPoint = Long.valueOf(member.getPointAmount().intValue()-point);
+        member.update(newPoint);
+
+        //포인트 내역 데이터 삽입
+        PointHistoryEntity pointHistory = PointHistoryEntity.builder()
+                .member(member)
+                .divNum(1L)
+                .amount(Long.valueOf(point))
+                .cmt("계좌로 출금")
+                .build();
+
+        phRepo.save(pointHistory);
+
+        return memberId;
     }
 }

@@ -40,7 +40,10 @@ public class MemberEntity {
 	@OneToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "rankId")
 	RankEntity rank;
-	
+
+	public void update(Long pointAmount){
+		this.pointAmount=pointAmount;
+	}
 	
 	
 }

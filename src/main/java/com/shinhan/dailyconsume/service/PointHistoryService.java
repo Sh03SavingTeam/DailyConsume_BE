@@ -13,4 +13,6 @@ public interface PointHistoryService {
     public PointDTO getPointByMember(Pageable pageable, String memberId);
 
     public PointAccountDTO getPointAccount(String memberId);
+
+    public String pointToCash(String memberId, int point);
 }
