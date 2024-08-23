@@ -5,9 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.shinhan.dailyconsume.domain.MenuEntity;
 import com.shinhan.dailyconsume.domain.StoreEntity;
+import com.shinhan.dailyconsume.dto.map.MenuDTO;
 import com.shinhan.dailyconsume.dto.map.RecommendDTO;
 import com.shinhan.dailyconsume.dto.map.StoreDetailDTO;
+import com.shinhan.dailyconsume.dto.store.StoreDTO;
+import com.shinhan.dailyconsume.repository.MenuRepository;
 import com.shinhan.dailyconsume.repository.StoreRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,16 +21,17 @@ import lombok.RequiredArgsConstructor;
 public class RecommendServiceImpl implements RecommendService{
 
 	private final StoreRepository storeRepo;
+	private final MenuRepository menuRepo;
 	
 	@Override
 	public List<RecommendDTO> recommendStores() {
 		List<StoreEntity> entities = storeRepo.findAll();
 		List<RecommendDTO> storeList = new ArrayList<>();
-		String currentYear = java.time.Year.now().toString();
-		int currentYearInt = Integer.parseInt(currentYear);
 		
 		entities.stream().forEach((entity) -> {
-			storeList.add(entityToDto(entity));
+			RecommendDTO recommendStore = entityToDto(entity);
+			recommendStore.setCate(entity.getStoreCate().getCateName());
+			storeList.add(recommendStore);
 		});
 		return storeList;
 	}
@@ -34,7 +39,13 @@ public class RecommendServiceImpl implements RecommendService{
 	@Override
 	public StoreDetailDTO getStoreDetail(String storeRegNum) {
 		StoreEntity entity = storeRepo.findById(storeRegNum).orElse(null);
-		return StoreDetailDTO.builder()
+		List<MenuEntity> menuEntityList = menuRepo.findByStoreInfo(entity);
+		List<MenuDTO> dtoList = new ArrayList<>();
+		
+		for(MenuEntity menuEntity: menuEntityList) {
+			dtoList.add(menuEntityToDto(menuEntity));
+		}
+		StoreDetailDTO dto = StoreDetailDTO.builder()
 				.storeRegNum(entity.getStoreRegNum())
 				.storeName(entity.getStoreName())
 				.storeAddr(entity.getStoreAddr())
@@ -42,7 +53,19 @@ public class RecommendServiceImpl implements RecommendService{
 				.storeLatX(entity.getStoreLatX())
 				.storeLonY(entity.getStoreLonY())
 				.storeImg(entity.getStoreImg())
+				.storeCate(entity.getStoreCate().getCateName())
+				.menus(dtoList)
 				.build();
+		return dto;
+	}
+
+	@Override
+	public void updateStore(StoreDTO storeDto) {
+		StoreEntity store = storeRepo.findById(storeDto.getStoreRegNum()).orElse(null);
+		store.setStoreLatX(storeDto.getStoreLatX());
+		store.setStoreLonY(storeDto.getStoreLonY());
+		
+		storeRepo.save(store);
 	}
 
 }
