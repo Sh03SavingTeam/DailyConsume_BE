@@ -36,4 +36,10 @@ public class StoreRecommendController {
 		recommenService.updateStore(storeDto);
 		return ResponseEntity.ok("갱신 완료");
 	}
+	
+	@GetMapping("/consume")
+	public ResponseEntity<Object> consumeRecommend() throws InterruptedException {
+		Thread.sleep(10000);
+		return ResponseEntity.ok("테스트입니다");
+	}
 }
