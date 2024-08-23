@@ -45,6 +45,7 @@ public class RecommendServiceImpl implements RecommendService{
 		for(MenuEntity menuEntity: menuEntityList) {
 			dtoList.add(menuEntityToDto(menuEntity));
 		}
+		
 		StoreDetailDTO dto = StoreDetailDTO.builder()
 				.storeRegNum(entity.getStoreRegNum())
 				.storeName(entity.getStoreName())
