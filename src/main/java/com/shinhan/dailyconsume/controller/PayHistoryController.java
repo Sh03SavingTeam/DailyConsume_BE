@@ -21,15 +21,11 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
-//@Tag(name="", description="")
 public class PayHistoryController {
 
 	@Autowired
 	PayHistoryService payService;
 	
-	
-	
-	// @Operation(summary= "카드 조회하기")
 	// 개인 카테고리별 지출내역 조회
 	@GetMapping("/mycardHistory") 
 	public ResponseEntity<Object> getMyHistoryList(@RequestParam String memberId) {
