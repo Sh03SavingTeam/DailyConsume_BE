@@ -117,6 +117,7 @@ public class CardRestController {
 	public MemberCardDTO memberCardRegister(@RequestBody MemberCardDTO memberCardDTO) {
 		System.out.println(memberCardDTO);
 		
+		
 		String cardNum = memberCardService.register(memberCardDTO);
 		return MemberCardDTO.builder().build();
 	}

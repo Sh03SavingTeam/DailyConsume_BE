@@ -13,29 +13,26 @@ public class SecurityConfig {
 		
 		http
 		.authorizeHttpRequests(auth -> {
-			auth.requestMatchers("/**", "/").permitAll();
+			auth.requestMatchers("/Login","/Register").permitAll();
 			auth.anyRequest().permitAll();
 		});
 		
         
 		http.formLogin(login-> {
-			login.loginPage("/auth/login")
-			.usernameParameter("mid")
-			.defaultSuccessUrl("/auth/loginSuccess")
+			login.loginProcessingUrl("/Login")
+			.defaultSuccessUrl("/home",true)
 			.permitAll();
 		});
 		
 		http.logout(out -> {
 			out.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-			.logoutSuccessUrl("/auth/loginSuccess")
+			.logoutSuccessUrl("/Login")
 			.invalidateHttpSession(true);
 		});
 		
 		http.csrf().disable();
 		
 		http.exceptionHandling(handling -> handling.accessDeniedPage("/auth/accessDenined"));
-		
-		http.csrf().disable();
 		
 		return http.build();
 		
