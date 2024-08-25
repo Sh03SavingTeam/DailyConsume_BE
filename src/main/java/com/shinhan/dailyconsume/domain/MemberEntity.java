@@ -42,6 +42,4 @@ public class MemberEntity {
 	@JoinColumn(name = "rankId")
 	RankEntity rank;
 	
-	
-	
 }
