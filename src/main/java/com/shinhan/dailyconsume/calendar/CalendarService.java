@@ -1,6 +1,7 @@
 package com.shinhan.dailyconsume.calendar;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import com.shinhan.dailyconsume.domain.ConsumeCategoryEntity;
 import com.shinhan.dailyconsume.domain.MemberCardEntity;
 import com.shinhan.dailyconsume.domain.PayHistoryEntity;
 import com.shinhan.dailyconsume.domain.StoreEntity;
+import com.shinhan.dailyconsume.domain.WeeklyConsumeEntity;
 
 import jakarta.transaction.Transactional;
 
@@ -92,11 +94,11 @@ public class CalendarService {
 	 * @param myPayCheck 업데이트할 myPayCheck 값 (1: 정상 결제, 0: 이상 결제)
 	 * @return 업데이트 성공 여부 (true: 성공, false: 실패)
 	 */
-//	@Transactional
+	@Transactional
 	public CalendarDTO updateMyPayCheck(String memberId, Long payId, Integer myPayCheck) {
 
 		try {
-			PayHistoryEntity payHistory = calendarRepo.findByMemberCardMemberMemberIdAndPayId(memberId, payId);
+			PayHistoryEntity payHistory = calendarRepo.findByMemberCardIdAndPayId(memberId, payId);
 			if (payHistory != null) {
 				payHistory.setMyPayCheck(myPayCheck);
 				PayHistoryEntity updatedEntity = calendarRepo.save(payHistory);
@@ -111,7 +113,54 @@ public class CalendarService {
 			return null;
 		}
 	}
+	
+	/**
+     * 특정 회원의 주간 소비 금액 요약 정보를 가져옵니다.
+     *
+     * @param memberId 회원 ID
+     * @param year     연도
+     * @param month    월
+     * @param day      일
+     * @return 주간 소비 요약 정보
+     */
+    public Map<String, Object> getWeeklyConsumeSummary(String memberId, int year, int month, int day) {
+    	System.out.println("getWeeklyConsumeSummary called with: " + memberId + ", " + year + "-" + month + "-" + day);
 
+        try {
+            // 입력된 날짜를 Timestamp로 변환
+            LocalDate selectedLocalDate = LocalDate.of(year, month, day);
+            Timestamp selectedDate = Timestamp.valueOf(selectedLocalDate.atStartOfDay());
+
+            // 주간 설정 정보 조회
+            Map<String, Object> summary = calendarRepo.findWeeklyConsumeSummary(memberId, selectedDate);
+
+            if (summary == null || summary.isEmpty()) {
+                return null;
+            }
+
+            System.out.println("Summary data: " + summary);
+            return summary;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 특정 회원의 특정 월의 주간 설정 금액 데이터를 조회합니다.
+     * 
+     * @param memberId 회원 ID
+     * @param month    월 (1월은 1, 12월은 12)
+     * @return 해당 월의 주간 설정 금액 리스트
+     */
+    public List<Map<String, Object>> getWeeklyConsumeByMonth(String memberId, int month) {
+        List<Map<String, Object>> weeklyConsumeList = calendarRepo.findWeeklyConsumeByMonth(memberId, month);
+        if (weeklyConsumeList.isEmpty()) {
+            return null;
+        }
+        return weeklyConsumeList;
+    }
+    
 	// entity를 dto로 변환
 	public CalendarDTO entityToDTO(PayHistoryEntity entity) {
 		return CalendarDTO.builder().payId(entity.getPayId()).payAmount(entity.getPayAmount())
