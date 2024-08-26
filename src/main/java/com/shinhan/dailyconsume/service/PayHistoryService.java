@@ -2,9 +2,7 @@ package com.shinhan.dailyconsume.service;
 
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class PayHistoryService {
 
 	private final MemberRepository memberRepo;
-	// private final MemberCardRepository memberCardRepo;
-	// private final PayHistoryRepository payHistoryRepo;
 
-	// 개인 카테고리별 지출내역 구하는 메소드
+	//개인 카테고리별 지출내역 구하는 메소드
 	@Transactional
 	public List<PayHistoryDTO> getPayHistory(String memberId) {
 
@@ -64,43 +60,27 @@ public class PayHistoryService {
 		
 		for(int i=0;i<4;i++) {
 			float payAmount = payHistories.get(i).getPayAmount();
-	        // totalAmount가 0이 아닌지 확인
+	        //totalAmount가 0이 아닌지 확인
 	        if (totalAmount > 0) {
 	            float percentage = (payAmount / (float) totalAmount) * 100;
 	            payHistories.get(i).setPercentage((float)((Math.round(percentage * 10.0) / 10.0)));
 	        } else {
-	            // totalAmount가 0일 경우 비율을 0으로 설정
+	            //totalAmount가 0일 경우 비율을 0으로 설정
 	            payHistories.get(i).setPercentage(0);
 	        }
 		}
-
 		return payHistories;
 	}
-	
-	/*[
-	 {"payAmount":5000, "consumeCategory":"식비 ", "percentage":50},
-	 {"payAmount":5000, "consumeCategory":"교통 비 ", "percentage":50},
-	 {"payAmount":5000, "consumeCategory":"여가 비 ", "percentage":50},
-	 {"payAmount":5000, "consumeCategory":"어쩌구 비 ", "percentage":50}
-	 ]*/
 
-	// 또래 카테고리별 지출내역 평균 구하는 메소드
+	//또래 카테고리별 지출내역 평균 구하는 메소드
 	@Transactional
 	public ChartDTO getPeerPayHistory(String memberId) {
 
 		Date memberBirth = memberRepo.findByMemberId(memberId).getMemberBirth();
 		
-		//System.out.println(memberBirth);
-		
 		int age = ((java.time.Year.now().getValue() - memberBirth.toLocalDate().getYear()) / 10) * 10;
-		//System.out.println(java.time.Year.now().getValue());
-		//System.out.println(memberBirth.toLocalDate().getYear());
-		//System.out.println(age);
 		
 		List<MemberEntity> peers = memberRepo.findPeerByAge(age);
-		
-		//System.out.println(peers.toString());
-		
 		List<PayHistoryEntity> datas = new ArrayList<>();
 		
 		int totalMember = peers.size();
@@ -142,7 +122,6 @@ public class PayHistoryService {
 		ChartDTO chartDTO = new ChartDTO(age, LocalDate.now().getMonthValue(), payHistories);
 		
 		return chartDTO;
-
 	}
 
 }
