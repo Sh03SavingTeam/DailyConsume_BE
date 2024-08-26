@@ -38,8 +38,26 @@ public class StoreRecommendController {
 	}
 	
 	@GetMapping("/consume")
-	public ResponseEntity<Object> consumeRecommend() throws InterruptedException {
+	public ResponseEntity<Object> consumeRecommend(@RequestParam Double lon, @RequestParam Double lat) throws InterruptedException {
+		Thread.sleep(8000);
+		return ResponseEntity.ok(recommenService.consumeRecommend());
+	}
+	
+	@GetMapping("/peer")
+	public ResponseEntity<Object> peerRecommend(@RequestParam Double lon, @RequestParam Double lat)  throws InterruptedException {
+		Thread.sleep(8000);
+		return ResponseEntity.ok(recommenService.peerRecommend());
+	}
+	
+	@GetMapping("/daypattern")
+	public ResponseEntity<Object> dayPatternRecommend(@RequestParam Double lon, @RequestParam Double lat) throws InterruptedException {
 		Thread.sleep(10000);
-		return ResponseEntity.ok("테스트입니다");
+		return ResponseEntity.ok(recommenService.dayPatternRecommend());
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<Object> allPatternRecommend(@RequestParam Double lon, @RequestParam Double lat) throws InterruptedException {
+		Thread.sleep(10000);
+		return ResponseEntity.ok(recommenService.allPatternRecommend());
 	}
 }

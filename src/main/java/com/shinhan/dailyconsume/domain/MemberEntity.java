@@ -34,7 +34,7 @@ public class MemberEntity {
 	String memberAccount;
 	Long pointAmount;
 	
-	@OneToMany(mappedBy="member", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="member", fetch = FetchType.EAGER)
 	List<MemberCardEntity> memberCards;
 	
 	
