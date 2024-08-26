@@ -33,6 +33,7 @@ public class MemberEntity {
 	Date memberBirth;
 	String memberAccount;
 	Long pointAmount;
+	String memberImg;
 	
 	@OneToMany(mappedBy="member", fetch = FetchType.LAZY)
 	List<MemberCardEntity> memberCards;
