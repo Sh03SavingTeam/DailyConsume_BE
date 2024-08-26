@@ -13,22 +13,22 @@ public class SecurityConfig {
 		
 		http
 		.authorizeHttpRequests(auth -> {
-			auth.requestMatchers("/Login","/Register").permitAll();
+			auth.requestMatchers("/api/member/**").permitAll();
 			auth.anyRequest().permitAll();
 		});
 		
         
-		http.formLogin(login-> {
-			login.loginProcessingUrl("/Login")
-			.defaultSuccessUrl("/home",true)
-			.permitAll();
-		});
-		
-		http.logout(out -> {
-			out.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-			.logoutSuccessUrl("/Login")
-			.invalidateHttpSession(true);
-		});
+//		http.formLogin(login-> {
+//			login.loginProcessingUrl("/Login")
+//			.defaultSuccessUrl("/home",true)
+//			.permitAll();
+//		});
+//		
+//		http.logout(out -> {
+//			out.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+//			.logoutSuccessUrl("/Login")
+//			.invalidateHttpSession(true);
+//		});
 		
 		http.csrf().disable();
 		
