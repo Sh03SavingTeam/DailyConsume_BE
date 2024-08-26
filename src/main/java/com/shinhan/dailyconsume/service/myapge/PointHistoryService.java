@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.service.point;
+package com.shinhan.dailyconsume.service.myapge;
 
 import com.shinhan.dailyconsume.dto.point.PointAccountDTO;
 import com.shinhan.dailyconsume.dto.point.PointDTO;

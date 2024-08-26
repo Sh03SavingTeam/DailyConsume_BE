@@ -2,7 +2,7 @@ package com.shinhan.dailyconsume.controller;
 
 import com.shinhan.dailyconsume.dto.point.PointAccountDTO;
 import com.shinhan.dailyconsume.dto.point.PointDTO;
-import com.shinhan.dailyconsume.service.point.PointHistoryService;
+import com.shinhan.dailyconsume.service.myapge.PointHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

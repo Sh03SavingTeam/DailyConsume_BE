@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.service.discount;
+package com.shinhan.dailyconsume.service.myapge;
 
 import com.shinhan.dailyconsume.dto.discount.DiscountingDTO;
 import org.springframework.data.domain.Pageable;

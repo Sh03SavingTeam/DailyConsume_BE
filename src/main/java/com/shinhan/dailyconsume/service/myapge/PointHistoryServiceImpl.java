@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.service.point;
+package com.shinhan.dailyconsume.service.myapge;
 
 import com.shinhan.dailyconsume.domain.MemberEntity;
 import com.shinhan.dailyconsume.domain.PointHistoryEntity;

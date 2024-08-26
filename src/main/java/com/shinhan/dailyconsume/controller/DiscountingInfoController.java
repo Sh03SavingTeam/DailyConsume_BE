@@ -1,7 +1,7 @@
 package com.shinhan.dailyconsume.controller;
 
 import com.shinhan.dailyconsume.dto.discount.DiscountingDTO;
-import com.shinhan.dailyconsume.service.discount.DiscountingInfoService;
+import com.shinhan.dailyconsume.service.myapge.DiscountingInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
