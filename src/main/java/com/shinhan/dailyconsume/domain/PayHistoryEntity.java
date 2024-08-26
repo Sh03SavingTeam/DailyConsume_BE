@@ -16,7 +16,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString(exclude = {"consumeCategory","memberCard","stores"})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,24 +28,26 @@ import lombok.NoArgsConstructor;
 public class PayHistoryEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long payId;
-	
-	private Long payAmount;
-	
-	@CreationTimestamp
-	private Timestamp payDate;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "consumeId")
-	private ConsumeCategoryEntity consumeCategory;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cardNum")
-	private MemberCardEntity memberCard;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "strRegNum")
-	private StoreEntity stores;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long payId;
+    
+    private Long payAmount;
+    
+    @CreationTimestamp
+    private Timestamp payDate;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "consumeId")
+    private ConsumeCategoryEntity consumeCategory;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cardNum")
+    private MemberCardEntity memberCard;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "strRegNum")
+    private StoreEntity stores;
+    
+    private int myPayCheck;
+    
 }

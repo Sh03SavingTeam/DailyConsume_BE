@@ -22,8 +22,6 @@ public class DiscountingInfoDTO {
 
 	private String productContent;
 
-	private String productCategory;
-
 	private String prodImg;
 
 	public DiscountingInfoDTO(DiscountingInfoEntity entity) {
@@ -31,7 +29,6 @@ public class DiscountingInfoDTO {
 		this.productName = entity.getProductName();
 		this.amount = entity.getAmount();
 		this.productContent = entity.getProductContent();
-		this.productCategory = entity.getProductCategory();
 		this.prodImg = entity.getProdImg();
 	}
 }

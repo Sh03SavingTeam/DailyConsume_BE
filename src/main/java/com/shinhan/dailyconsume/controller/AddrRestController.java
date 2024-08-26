@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,26 @@ public class AddrRestController {
 	public List<AddrDTO> getAddrList(@RequestParam String memberId){
 		List<AddrDTO> addrList = addrService.getAddrList(memberId);
 		return addrList;
+	}
+	
+	@PutMapping("/changeDefaultAddr")
+	public String changeDefaultAddr( @RequestParam String memberId, 
+            @RequestParam Long addrId) {
+		
+		List<AddrDTO> addrList = addrService.getAddrList(memberId);
+		
+		//반복문을 통해 
+		for(AddrDTO addr : addrList) {
+			if(addr.getAddrId()==addrId) {
+				addr.setAddrDefault(1);
+				
+			}else {
+				addr.setAddrDefault(0);
+			}
+			addrService.addrUpdate(addr);
+		}
+		
+		return "DefaultAddressUpdated : "+addrId;
 	}
 	
 	//선택한 주소 삭제

@@ -26,7 +26,7 @@ public class ReviewEntity {
 	private Long reviewId;
 	private double rating;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "strRegNum")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "storeRegNum")
 	private StoreEntity store;
 }

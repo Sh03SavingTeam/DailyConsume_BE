@@ -35,4 +35,6 @@ public class AddressEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="memberId")
 	private MemberEntity member;
+	
+	
 }
