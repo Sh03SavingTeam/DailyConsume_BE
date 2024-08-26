@@ -29,30 +29,37 @@ public class MypageServiceImpl implements MypageService{
         //회원 주간 미션 정보 조회
         if(wRepo.findByMemberOrderByEndDateDesc(member).size()!=0){
             List<WeeklyConsumeEntity> weeklyConsumes = wRepo.findByMemberOrderByEndDateDesc(member);
+            
+            if(weeklyConsumes.size()!=0) {
+            	// "2024-08-25."
+                String endDate = weeklyConsumes.get(0).getEndDate()
+                        .toLocalDateTime()
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-            // "2024-08-25."
-            String endDate = weeklyConsumes.get(0).getEndDate()
-                    .toLocalDateTime()
-                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                LocalDate today = LocalDate.now();
 
-            LocalDate today = LocalDate.now();
+                // 이번 주의 시작일(월요일)
+                LocalDate weekStart = today.minusDays(today.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue());
 
-            // 이번 주의 시작일(월요일)
-            LocalDate weekStart = today.minusDays(today.getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue());
+                // 이번 주의 종료일(일요일)
+                LocalDate weekEnd = weekStart.plusDays(6);
 
-            // 이번 주의 종료일(일요일)
-            LocalDate weekEnd = weekStart.plusDays(6);
+                String nowEndDate = weekEnd.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-            String nowEndDate = weekEnd.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-            MemberInfoDTO memberInfoDTO;
-            if(endDate.equals(nowEndDate)){
-                memberInfoDTO = new MemberInfoDTO(member.getMemberImg(), member.getMemberName(), weeklyConsumes.get(0).getWeeklyMoney(), endDate);
+                MemberInfoDTO memberInfoDTO;
+                if(endDate.equals(nowEndDate)){
+                    memberInfoDTO = new MemberInfoDTO(member.getMemberImg(), member.getMemberName(), weeklyConsumes.get(0).getWeeklyMoney(), endDate);
+                }
+                else{
+                    memberInfoDTO = new MemberInfoDTO(member.getMemberImg(), member.getMemberName(), 0, "");
+                }
+                return memberInfoDTO;
             }
-            else{
-                memberInfoDTO = new MemberInfoDTO(member.getMemberImg(), member.getMemberName(), 0, "");
+            else {
+            	MemberInfoDTO memberInfoDTO = new MemberInfoDTO(member.getMemberImg(), member.getMemberName(), 0, "");
+                return memberInfoDTO;
             }
-            return memberInfoDTO;
+            
         }
         else{
             MemberInfoDTO memberInfoDTO = new MemberInfoDTO(member.getMemberImg(), member.getMemberName(), 0, "");
