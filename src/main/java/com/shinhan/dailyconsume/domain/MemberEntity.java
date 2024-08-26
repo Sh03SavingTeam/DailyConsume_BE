@@ -34,7 +34,6 @@ public class MemberEntity {
 	String memberAccount;
 	Long pointAmount;
 	String memberImg;
-
 	
 	@OneToMany(mappedBy="member", fetch = FetchType.LAZY)
 	List<MemberCardEntity> memberCards;
