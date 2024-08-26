@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.dto;
+package com.shinhan.dailyconsume.dto.discount;
 
 import com.shinhan.dailyconsume.domain.DiscountingInfoEntity;
 import lombok.AllArgsConstructor;
