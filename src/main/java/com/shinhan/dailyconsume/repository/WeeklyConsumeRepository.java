@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.shinhan.dailyconsume.domain.WeeklyConsumeEntity;
 
+import java.util.List;
+
 public interface WeeklyConsumeRepository extends JpaRepository<WeeklyConsumeEntity, Long>{
 
-    WeeklyConsumeEntity findByMember(MemberEntity member);
+    List<WeeklyConsumeEntity> findByMemberOrderByEndDateDesc(MemberEntity member);
 }
