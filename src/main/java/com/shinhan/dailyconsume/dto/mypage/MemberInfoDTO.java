@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.dto;
+package com.shinhan.dailyconsume.dto.mypage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PointHistoryDTO {
-    private Long divNum;
-    private Long amount;
-    private String pointRegDate;
-    private String cmt;
+public class MemberInfoDTO {
+    private String memberImg;
+    private String memberName;
+    private int weeklyMoney;
+    private String endDate;
 }

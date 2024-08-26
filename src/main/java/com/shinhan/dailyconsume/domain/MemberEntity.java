@@ -33,6 +33,7 @@ public class MemberEntity {
 	Date memberBirth;
 	String memberAccount;
 	Long pointAmount;
+	String memberImg;
 	
 	@OneToMany(mappedBy="member", fetch = FetchType.LAZY)
 	List<MemberCardEntity> memberCards;
@@ -42,7 +43,10 @@ public class MemberEntity {
 	@JoinColumn(name = "rankId")
 	@ToString.Exclude
 	RankEntity rank;
-	
+
+	public void update(Long pointAmount){
+		this.pointAmount=pointAmount;
+	}
 	
 	
 }
