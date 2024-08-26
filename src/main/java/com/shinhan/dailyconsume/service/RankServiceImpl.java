@@ -78,23 +78,23 @@ public class RankServiceImpl implements RankService{
 		
 		List<RankEntity> rankInfoList = rankRepo.findAll();
 		
-		System.out.println("++++++++++++++++++++member+++++++++++++++++: " + member);
-		System.out.println("------------------------total----------------------: " + totalScore);
+//		System.out.println("++++++++++++++++++++member+++++++++++++++++: " + member);
+//		System.out.println("------------------------total----------------------: " + totalScore);
 		for(int i = rankInfoList.size() - 1; i >= 0; i--) {
 		    RankEntity rankInfo = rankInfoList.get(i);
 		    
 		    if(memberRank.getRankId() == rankInfoList.get(rankInfoList.size() - 1).getRankId()) {
-		        return "지급 성공";
+		        return "최고레벨";
 		    }
 		    
 		    if(rankInfo.getScore() <= totalScore 
 		    		&& rankInfo.getRankId() > memberRank.getRankId()) {
 		        memberRepo.updateRank(rankInfo, member.getMemberId());
-		        return "지급 성공";
+		        return "레벨갱신";
 		    }
 		}
 		
-		return "===";
+		return "변동없음";
 	}
 
 
