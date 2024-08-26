@@ -27,7 +27,7 @@ public class MypageServiceImpl implements MypageService{
         MemberEntity member = mRepo.findByMemberId(memberId);
 
         //회원 주간 미션 정보 조회
-        if(wRepo.findByMemberOrderByEndDateDesc(member)!=null){
+        if(wRepo.findByMemberOrderByEndDateDesc(member).size()!=0){
             List<WeeklyConsumeEntity> weeklyConsumes = wRepo.findByMemberOrderByEndDateDesc(member);
 
             // "2024-08-25."
