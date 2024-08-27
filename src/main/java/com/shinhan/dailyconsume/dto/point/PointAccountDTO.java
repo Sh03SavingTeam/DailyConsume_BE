@@ -1,4 +1,4 @@
-package com.shinhan.dailyconsume.dto;
+package com.shinhan.dailyconsume.dto.point;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

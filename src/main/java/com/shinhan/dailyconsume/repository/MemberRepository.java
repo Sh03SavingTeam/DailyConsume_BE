@@ -1,6 +1,5 @@
 package com.shinhan.dailyconsume.repository;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,11 +22,12 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String>, Q
 			+ " BETWEEN ?1 AND ?1 +9 ", nativeQuery = true)
 	List<MemberEntity> findPeerByAge(int age);
 	
-	//유저의 모든 결제정보를 가져오는 쿼리 
+	//유저의 모든 정 결제정보를 가져오는 쿼리 
 	@Query("SELECT ph FROM PayHistoryEntity ph " +
 	           "JOIN ph.memberCard mc " +
 	           "JOIN mc.member m " +
-	           "WHERE m.memberId = :memberId and DATE_FORMAT(ph.payDate,'%Y-%m')=DATE_FORMAT(now(),'%Y-%m')")
+	           "WHERE m.memberId = :memberId and DATE_FORMAT(ph.payDate,'%Y-%m')=DATE_FORMAT(now(),'%Y-%m')" +
+	           "AND ph.myPayCheck=1 ")
 	List<PayHistoryEntity> findPayHistoriesByMemberId(@Param("memberId") String memberId);
 
 }

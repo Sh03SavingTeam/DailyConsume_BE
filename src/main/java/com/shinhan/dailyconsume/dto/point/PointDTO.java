@@ -1,6 +1,5 @@
-package com.shinhan.dailyconsume.dto;
+package com.shinhan.dailyconsume.dto.point;
 
-import com.shinhan.dailyconsume.domain.PointHistoryEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

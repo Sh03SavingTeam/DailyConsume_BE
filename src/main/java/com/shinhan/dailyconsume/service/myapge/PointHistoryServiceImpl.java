@@ -1,10 +1,10 @@
-package com.shinhan.dailyconsume.service;
+package com.shinhan.dailyconsume.service.myapge;
 
 import com.shinhan.dailyconsume.domain.MemberEntity;
 import com.shinhan.dailyconsume.domain.PointHistoryEntity;
-import com.shinhan.dailyconsume.dto.PointAccountDTO;
-import com.shinhan.dailyconsume.dto.PointDTO;
-import com.shinhan.dailyconsume.dto.PointHistoryDTO;
+import com.shinhan.dailyconsume.dto.point.PointAccountDTO;
+import com.shinhan.dailyconsume.dto.point.PointDTO;
+import com.shinhan.dailyconsume.dto.point.PointHistoryDTO;
 import com.shinhan.dailyconsume.repository.MemberRepository;
 import com.shinhan.dailyconsume.repository.PointHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +29,7 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         return dto;
     }
 
+    // 멤버 포인트 내역 가져오기
     @Override
     public PointDTO getPointByMember(Pageable pageable, String memberId) {
 
@@ -39,7 +40,7 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         Long totalPoint = phRepo.getTotalPointByMember(member);
 
         //포인트 이력 조회 (DTO 변환 + 페이징)
-        List<PointHistoryDTO> pointHistories = phRepo.findPointHistoryByMember(member).stream()
+        List<PointHistoryDTO> pointHistories = phRepo.findByMemberOrderByPointRegDateDesc(member).stream()
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
 
@@ -63,11 +64,36 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         return pointDTO;
     }
 
+    // 멤버 포인트 양, 계좌 정보 가져오기
     @Override
     public PointAccountDTO getPointAccount(String memberId) {
         //회원 정보 조회
         MemberEntity member = mRepo.findByMemberId(memberId);
+
         PointAccountDTO pointAccountDTO = new PointAccountDTO(member.getPointAmount().intValue(), member.getMemberAccount());
         return pointAccountDTO;
+    }
+
+    // 포인트 환급화
+    @Override
+    public String pointToCash(String memberId, int point) {
+        //회원 정보 조회
+        MemberEntity member = mRepo.findByMemberId(memberId);
+
+        //회원 포인트 양 업데이트
+        Long newPoint = Long.valueOf(member.getPointAmount().intValue()-point);
+        member.update(newPoint);
+
+        //포인트 내역 데이터 삽입
+        PointHistoryEntity pointHistory = PointHistoryEntity.builder()
+                .member(member)
+                .divNum(1L)
+                .amount(Long.valueOf(point))
+                .cmt("계좌로 출금")
+                .build();
+
+        phRepo.save(pointHistory);
+
+        return memberId;
     }
 }

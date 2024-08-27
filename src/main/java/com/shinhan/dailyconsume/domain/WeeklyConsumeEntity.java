@@ -30,6 +30,7 @@ public class WeeklyConsumeEntity {
 	private Timestamp startDate;
 	private Timestamp endDate;
 	private String weeklyCheck;
+	private int weeklyMoney;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="memberId")
