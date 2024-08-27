@@ -32,7 +32,8 @@ public interface RankHistoryRepository extends JpaRepository<RankHistoryEntity, 
 	        "WHERE MONTH(rh.rank_reg_date) = MONTH(CURDATE()) " +
 	        "  AND YEAR(rh.rank_reg_date) = YEAR(CURDATE()) " +
 	        "GROUP BY rh.member_id, m.member_name, m.rank_id " +
-	        "ORDER BY totalAmount DESC", 
+	        "ORDER BY totalAmount DESC "+
+	        "LIMIT 5 ", 
 	        nativeQuery = true)
 	List<RankingProjection> getAllRanking();
 	
@@ -68,7 +69,8 @@ public interface RankHistoryRepository extends JpaRepository<RankHistoryEntity, 
 		        a.addr_id,
 		        a.addr_detail
 		    ORDER BY 
-		        totalAmount DESC
+		        totalAmount DESC 
+		    LIMIT 5
 		    """, nativeQuery = true)
 	    List<AddressRankingProjection> getRankingByAddress(@Param("memberId") String memberId);
 
