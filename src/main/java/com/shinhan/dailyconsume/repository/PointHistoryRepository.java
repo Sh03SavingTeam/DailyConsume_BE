@@ -11,7 +11,10 @@ import java.util.List;
 public interface PointHistoryRepository extends JpaRepository<PointHistoryEntity, Long> {
 
     @Query("SELECT SUM(p.amount) FROM PointHistoryEntity p WHERE p.member = :member and p.divNum=0")
-    Long getTotalPointByMember(@Param("member") MemberEntity member);
+    Long getPlusPointByMember(@Param("member") MemberEntity member);
+
+    @Query("SELECT SUM(p.amount) FROM PointHistoryEntity p WHERE p.member = :member and p.divNum=1")
+    Long getMinusPointByMember(@Param("member") MemberEntity member);
 
     List<PointHistoryEntity> findByMemberOrderByPointRegDateDesc(MemberEntity member);
 }
