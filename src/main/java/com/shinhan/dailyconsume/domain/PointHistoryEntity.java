@@ -40,7 +40,7 @@ public class PointHistoryEntity {
 	
 	private String cmt;
 	
-	@ManyToOne( fetch = FetchType.LAZY )
+	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name = "memberId")
 	private MemberEntity member;
 	
