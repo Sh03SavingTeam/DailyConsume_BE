@@ -1,5 +1,6 @@
 package com.shinhan.dailyconsume.controller;
 
+import com.shinhan.dailyconsume.service.WeeklyScheduler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TestController {
 
-	final TestSerivce tService;
+	private final TestSerivce tService;
+
+	private final WeeklyScheduler weeklyScheduler;
+
 	
 	@GetMapping
 	public TestDTO test() {
