@@ -3,6 +3,7 @@ package com.shinhan.dailyconsume.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 
 import com.shinhan.dailyconsume.dto.mypage.AddressRankingProjection;
 import com.shinhan.dailyconsume.dto.mypage.RankDTO;
@@ -19,5 +20,7 @@ public interface RankService {
 	
 	String register(RankHistoryInfoDTO rankHistoryInfoDTO);
 	
-    
+	int countAttendanceCheckByMemberId(String memberId);
+	
+	int checkIfRankExistsForToday(String memberId);
 }

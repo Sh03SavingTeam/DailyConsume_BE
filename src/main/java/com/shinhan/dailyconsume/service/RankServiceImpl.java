@@ -77,9 +77,7 @@ public class RankServiceImpl implements RankService{
 		Long totalScore = Long.valueOf(rHistoryRepo.getTotalScore(rankHistoryInfoDTO.getMemberId()));
 		
 		List<RankEntity> rankInfoList = rankRepo.findAll();
-		
-//		System.out.println("++++++++++++++++++++member+++++++++++++++++: " + member);
-//		System.out.println("------------------------total----------------------: " + totalScore);
+
 		for(int i = rankInfoList.size() - 1; i >= 0; i--) {
 		    RankEntity rankInfo = rankInfoList.get(i);
 		    
@@ -102,6 +100,20 @@ public class RankServiceImpl implements RankService{
 	public List<AddressRankingProjection> getRankingByAddress(String memberId) {
 		List<AddressRankingProjection> arlist = rHistoryRepo.getRankingByAddress(memberId);
 		return arlist;
+	}
+
+
+	@Override
+	public int countAttendanceCheckByMemberId(String memberId) {
+		// TODO Auto-generated method stub
+		return rHistoryRepo.countAttendanceCheckByMemberId(memberId);
+	}
+
+
+	@Override
+	public int checkIfRankExistsForToday(String memberId) {
+		// TODO Auto-generated method stub
+		return rHistoryRepo.checkIfRankExistsForToday(memberId);
 	}
 	
 	

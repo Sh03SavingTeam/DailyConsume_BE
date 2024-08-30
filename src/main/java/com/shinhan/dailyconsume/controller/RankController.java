@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shinhan.dailyconsume.dto.AttendanceDTO;
 import com.shinhan.dailyconsume.dto.mypage.AddressRankingProjection;
 import com.shinhan.dailyconsume.dto.mypage.RankDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankHistoryInfoDTO;
@@ -42,8 +43,15 @@ public class RankController {
 		return rankService.getRankingByAddress(memberId);
 	}
 	
-	@PostMapping("/scoreTest")
+	@PostMapping("/scoreInsert")
 	public String register(@RequestBody RankHistoryInfoDTO rankHistoryInfoDTO) {
 		return rankService.register(rankHistoryInfoDTO);
+	}
+	@GetMapping("/attendance/{memberId}")
+	public AttendanceDTO attendanceInfo(@PathVariable("memberId") String memberId) {
+		int attendanceInfo = rankService.checkIfRankExistsForToday(memberId);
+		int totalAttendance = rankService.countAttendanceCheckByMemberId(memberId);
+		AttendanceDTO attenDTO = new AttendanceDTO(memberId,attendanceInfo,totalAttendance );
+		return attenDTO;
 	}
 }
