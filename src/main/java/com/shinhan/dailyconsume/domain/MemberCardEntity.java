@@ -1,6 +1,7 @@
 package com.shinhan.dailyconsume.domain;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -33,6 +34,6 @@ public class MemberCardEntity {
 	private MemberEntity member;
 	
 
-	@OneToMany(mappedBy = "memberCard", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "memberCard", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<PayHistoryEntity> payHistories;
 }

@@ -3,6 +3,7 @@ package com.shinhan.dailyconsume.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,9 +47,6 @@ public class CardRestController {
 	@Autowired
 	CardBenefitService cardBenefitService;
 
-	// 로그인한 사용자의 카드 목록 조회
-	// @GetMapping("/list")
-
 	// 카드 촬영 사진에 대한 OCR
 	@PostMapping("/cardOCR")
 	@ResponseBody
@@ -91,6 +89,13 @@ public class CardRestController {
 		return cardService.getCreditCards();
 	}
 	
+	//전체 카드 정보 목록
+	@GetMapping("/getAllCardInfo")
+	public List<CardDTO> getAllCardInfo(){
+		return cardService.getCardInfos();
+	}
+	
+	
 	//선택한 카드 정보(카드번호 -> 이미지, 카드명)
 	@GetMapping("/getCardInfo")
 	public CardDTO getCardInfo(@RequestParam String cardNum) {
@@ -111,6 +116,7 @@ public class CardRestController {
 		return cardbenefitList;
 	}
 	
+	
 
 	// 카드 정보 등록
 	@PostMapping("/cardRegister")
@@ -122,7 +128,7 @@ public class CardRestController {
 		return MemberCardDTO.builder().build();
 	}
 	
-	// 등록 카드 목록 조회
+	// 로그인한 회원이 등록한 카드 목록 조회
 	@GetMapping("/memberCardList")
 	public List<MemberCardDTO> getMemberCardList(@RequestParam String memberId){
 		List<MemberCardDTO> memberCardList = memberCardService.selectByMemberId(memberId);
