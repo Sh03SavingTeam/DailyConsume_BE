@@ -35,4 +35,24 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String>, Q
 	@Modifying(clearAutomatically = true)
 	@Query("update MemberEntity m set m.rank = :rank where m.memberId = :memberId")
 	void updateRank(RankEntity rank, String memberId);
+	
+	// 10대 조회
+	@Query("SELECT m"
+			+ " FROM MemberEntity m"
+			+ " WHERE (YEAR(CURRENT_DATE) - YEAR(m.memberBirth)) BETWEEN 10 AND 19")
+	List<MemberEntity> teenMember();
+	
+	// 20대 남성 조회
+	@Query("SELECT m"
+			+ " FROM MemberEntity m"
+			+ " WHERE (YEAR(CURRENT_DATE) - YEAR(m.memberBirth)) BETWEEN 20 AND 29"
+			+ " AND m.memberGender = 'Male'")
+	List<MemberEntity> twentyMaleMember();
+		
+	// 20대 여성 조회
+	@Query("SELECT m"
+			+ " FROM MemberEntity m"
+			+ " WHERE (YEAR(CURRENT_DATE) - YEAR(m.memberBirth)) BETWEEN 20 AND 29"
+			+ " AND m.memberGender = 'Female'")
+	List<MemberEntity> twentyFemaleMember();
 }
