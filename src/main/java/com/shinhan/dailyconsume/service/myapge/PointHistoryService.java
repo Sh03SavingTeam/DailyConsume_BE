@@ -1,7 +1,9 @@
 package com.shinhan.dailyconsume.service.myapge;
 
+import com.shinhan.dailyconsume.domain.PointHistoryEntity;
 import com.shinhan.dailyconsume.dto.point.PointAccountDTO;
 import com.shinhan.dailyconsume.dto.point.PointDTO;
+import com.shinhan.dailyconsume.dto.point.PointRegisterDTO;
 import org.springframework.data.domain.Pageable;
 
 public interface PointHistoryService {
@@ -14,4 +16,7 @@ public interface PointHistoryService {
 
     // 포인트 환급화
     public String pointToCash(String memberId, int point);
+
+    // 포인트 지급
+    public PointHistoryEntity register(PointRegisterDTO pointRegisterDTO);
 }
