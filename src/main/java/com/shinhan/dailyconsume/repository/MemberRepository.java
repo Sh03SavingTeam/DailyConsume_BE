@@ -3,6 +3,7 @@ package com.shinhan.dailyconsume.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.shinhan.dailyconsume.domain.MemberEntity;
 import com.shinhan.dailyconsume.domain.PayHistoryEntity;
+import com.shinhan.dailyconsume.domain.RankEntity;
 
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, String>, QuerydslPredicateExecutor<MemberEntity>{
@@ -30,4 +32,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String>, Q
 	           "AND ph.myPayCheck=1 ")
 	List<PayHistoryEntity> findPayHistoriesByMemberId(@Param("memberId") String memberId);
 
+	@Modifying(clearAutomatically = true)
+	@Query("update MemberEntity m set m.rank = :rank where m.memberId = :memberId")
+	void updateRank(RankEntity rank, String memberId);
 }
