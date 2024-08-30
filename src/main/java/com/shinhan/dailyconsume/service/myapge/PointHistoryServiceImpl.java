@@ -37,7 +37,9 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         MemberEntity member = mRepo.findByMemberId(memberId);
 
         //총 포인트 조회
-        Long totalPoint = phRepo.getTotalPointByMember(member);
+        Long plusPoint = phRepo.getPlusPointByMember(member);
+        Long minusPoint = phRepo.getMinusPointByMember(member);
+        Long totalPoint = plusPoint-minusPoint;
 
         //포인트 이력 조회 (DTO 변환 + 페이징)
         List<PointHistoryDTO> pointHistories = phRepo.findByMemberOrderByPointRegDateDesc(member).stream()
@@ -70,7 +72,12 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         //회원 정보 조회
         MemberEntity member = mRepo.findByMemberId(memberId);
 
-        PointAccountDTO pointAccountDTO = new PointAccountDTO(member.getPointAmount().intValue(), member.getMemberAccount());
+        //총 포인트 조회
+        Long plusPoint = phRepo.getPlusPointByMember(member);
+        Long minusPoint = phRepo.getMinusPointByMember(member);
+        Long totalPoint = plusPoint-minusPoint;
+
+        PointAccountDTO pointAccountDTO = new PointAccountDTO(totalPoint.intValue(), member.getMemberAccount());
         return pointAccountDTO;
     }
 
