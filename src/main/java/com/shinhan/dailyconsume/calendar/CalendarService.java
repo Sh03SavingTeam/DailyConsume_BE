@@ -77,8 +77,8 @@ public class CalendarService {
 					dto.setStoreName((String) result.get(columName));
 				if (columName.equals("my_pay_check"))
 					dto.setMyPayCheck((Integer) result.get(columName));
-				if (columName.equals("menu_name"))
-					dto.setMenuName((String) result.get(columName));
+//				if (columName.equals("menu_name"))
+//					dto.setMenuName((String) result.get(columName));
 			}
 			return dto;
 		}
