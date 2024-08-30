@@ -16,6 +16,14 @@ public interface RecommendService {
 	StoreDetailDTO getStoreDetail(String storeRegNum);
 	
 	void updateStore(StoreDTO storeDto);
+	
+	List<RecommendDTO> consumeRecommend();
+	
+	List<RecommendDTO> peerRecommend();
+	
+	List<RecommendDTO> dayPatternRecommend();
+	
+	List<RecommendDTO> allPatternRecommend();
 
 	default RecommendDTO entityToDto(StoreEntity entity) {
 		return RecommendDTO.builder()

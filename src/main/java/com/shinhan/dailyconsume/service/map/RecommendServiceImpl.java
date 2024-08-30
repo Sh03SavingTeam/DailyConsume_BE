@@ -23,6 +23,10 @@ public class RecommendServiceImpl implements RecommendService{
 	private final StoreRepository storeRepo;
 	private final MenuRepository menuRepo;
 	
+	Double longitude = 126.92270138644199;
+	Double latitude = 37.55936310336185;
+	Double distance = 500.0;
+	
 	@Override
 	public List<RecommendDTO> recommendStores() {
 		List<StoreEntity> entities = storeRepo.findAll();
@@ -67,6 +71,64 @@ public class RecommendServiceImpl implements RecommendService{
 		store.setStoreLonY(storeDto.getStoreLonY());
 		
 		storeRepo.save(store);
+	}
+
+	@Override
+	public List<RecommendDTO> consumeRecommend() {
+		List<StoreEntity> entities = storeRepo.findStoresWithinDistance(longitude, latitude, distance);
+		List<RecommendDTO> storeList = new ArrayList<>();
+		
+		
+		for (int i = 0; i < 40; i++) {
+			int randomIdx = (int) (Math.random() * (entities.size() -1));;
+			RecommendDTO recommendStore = entityToDto(entities.get(randomIdx));
+			recommendStore.setCate(entities.get(randomIdx).getStoreCate().getCateName());
+			storeList.add(recommendStore);
+		}
+		return storeList;
+	}
+
+	@Override
+	public List<RecommendDTO> peerRecommend() {
+		List<StoreEntity> entities = storeRepo.findStoresWithinDistance(longitude, latitude, distance);
+		List<RecommendDTO> storeList = new ArrayList<>();
+		
+		
+		for (int i = 0; i < 40; i++) {
+			int randomIdx = (int) (Math.random() * (entities.size() -1));;
+			RecommendDTO recommendStore = entityToDto(entities.get(randomIdx));
+			recommendStore.setCate(entities.get(randomIdx).getStoreCate().getCateName());
+			storeList.add(recommendStore);
+		}
+		return storeList;
+	}
+
+	@Override
+	public List<RecommendDTO> dayPatternRecommend() {
+		List<StoreEntity> entities = storeRepo.findStoresWithinDistance(longitude, latitude, distance);
+		List<RecommendDTO> storeList = new ArrayList<>();
+		
+		for (int i = 0; i < 40; i++) {
+			int randomIdx = (int) (Math.random() * (entities.size() -1));;
+			RecommendDTO recommendStore = entityToDto(entities.get(randomIdx));
+			recommendStore.setCate(entities.get(randomIdx).getStoreCate().getCateName());
+			storeList.add(recommendStore);
+		}
+		return storeList;
+	}
+
+	@Override
+	public List<RecommendDTO> allPatternRecommend() {
+		List<StoreEntity> entities = storeRepo.findStoresWithinDistance(longitude, latitude, distance);
+		List<RecommendDTO> storeList = new ArrayList<>();
+		
+		for (int i = 0; i < 40; i++) {
+			int randomIdx = (int) (Math.random() * (entities.size() -1));;
+			RecommendDTO recommendStore = entityToDto(entities.get(randomIdx));
+			recommendStore.setCate(entities.get(randomIdx).getStoreCate().getCateName());
+			storeList.add(recommendStore);
+		}
+		return storeList;
 	}
 
 }

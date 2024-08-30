@@ -1,7 +1,9 @@
 package com.shinhan.dailyconsume.controller;
 
+import com.shinhan.dailyconsume.domain.PointHistoryEntity;
 import com.shinhan.dailyconsume.dto.point.PointAccountDTO;
 import com.shinhan.dailyconsume.dto.point.PointDTO;
+import com.shinhan.dailyconsume.dto.point.PointRegisterDTO;
 import com.shinhan.dailyconsume.service.myapge.PointHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +20,7 @@ public class PointHistoryController {
 
     // 멤버 포인트 내역 가져오기
     @GetMapping("/mypage/point/{memberId}")
-    public ResponseEntity<Object> getPointByMember(@PageableDefault(size=5) Pageable pageable, @PathVariable("memberId") String memberId) {
+    public ResponseEntity<Object> getPointByMember(@PageableDefault(size=4) Pageable pageable, @PathVariable("memberId") String memberId) {
         PointDTO pointDTO = phService.getPointByMember(pageable, memberId);
         if(pointDTO==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -44,5 +46,15 @@ public class PointHistoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(answer);
+    }
+
+    // 포인트 지급
+    @PostMapping("/point")
+    public ResponseEntity<String> pointToCash(@RequestBody PointRegisterDTO pointRegisterDTO){
+        PointHistoryEntity result = phService.register(pointRegisterDTO);
+        if(result==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok("지급 성공");
     }
 }

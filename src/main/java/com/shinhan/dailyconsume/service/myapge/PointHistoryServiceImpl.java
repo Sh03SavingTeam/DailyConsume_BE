@@ -5,6 +5,7 @@ import com.shinhan.dailyconsume.domain.PointHistoryEntity;
 import com.shinhan.dailyconsume.dto.point.PointAccountDTO;
 import com.shinhan.dailyconsume.dto.point.PointDTO;
 import com.shinhan.dailyconsume.dto.point.PointHistoryDTO;
+import com.shinhan.dailyconsume.dto.point.PointRegisterDTO;
 import com.shinhan.dailyconsume.repository.MemberRepository;
 import com.shinhan.dailyconsume.repository.PointHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -102,5 +103,30 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         phRepo.save(pointHistory);
 
         return memberId;
+    }
+
+    @Override
+    public PointHistoryEntity register(PointRegisterDTO pointRegisterDTO) {
+
+        System.out.println(pointRegisterDTO);
+
+        System.out.println("================================" + pointRegisterDTO.getMemberId());
+
+        MemberEntity member = mRepo.findById(pointRegisterDTO.getMemberId()).orElse(null);
+
+        System.out.println(member);
+
+        PointHistoryEntity pointHistory = PointHistoryEntity.builder()
+                .divNum(0L)
+                .amount(Long.valueOf(pointRegisterDTO.getPoint()))
+                .cmt(pointRegisterDTO.getComment())
+                .member(member)
+                .build();
+
+        PointHistoryEntity result = phRepo.save(pointHistory);
+
+        System.out.println("==========================세이브 후 SOUT");
+
+        return result;
     }
 }
