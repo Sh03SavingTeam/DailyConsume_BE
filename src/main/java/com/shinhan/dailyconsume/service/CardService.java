@@ -21,6 +21,8 @@ public interface CardService {
 	//카드정보
 	CardDTO getCardInfo(String cardName);
 	
+	List<CardDTO> getCardInfos();
+	
 	default CardEntity dtoToEntity(CardDTO dto) {
 		CardEntity carden = CardEntity.builder()
 				.cardName(dto.getCardName())

@@ -37,5 +37,13 @@ public class CardServiceImpl implements CardService{
 		CardEntity cardentity = cardRepo.findByCardName(cardName);
 		return entityToDTO(cardentity);
 	}
+	
+	@Override
+	public List<CardDTO> getCardInfos(){
+		List<CardDTO> cardlist = cardRepo.findAll().stream().map(en->entityToDTO(en))
+				.collect(Collectors.toList());
+		
+		return cardlist;
+	}
 
 }
