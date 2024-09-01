@@ -105,16 +105,17 @@ public class PointHistoryServiceImpl implements PointHistoryService{
         return memberId;
     }
 
+    // 포인트 지급
     @Override
     public PointHistoryEntity register(PointRegisterDTO pointRegisterDTO) {
 
-        System.out.println(pointRegisterDTO);
+        //System.out.println(pointRegisterDTO);
 
-        System.out.println("================================" + pointRegisterDTO.getMemberId());
+        //System.out.println("================================" + pointRegisterDTO.getMemberId());
 
         MemberEntity member = mRepo.findById(pointRegisterDTO.getMemberId()).orElse(null);
 
-        System.out.println(member);
+        //System.out.println(member);
 
         PointHistoryEntity pointHistory = PointHistoryEntity.builder()
                 .divNum(0L)
@@ -125,7 +126,7 @@ public class PointHistoryServiceImpl implements PointHistoryService{
 
         PointHistoryEntity result = phRepo.save(pointHistory);
 
-        System.out.println("==========================세이브 후 SOUT");
+        //System.out.println("==========================세이브 후 SOUT");
 
         return result;
     }

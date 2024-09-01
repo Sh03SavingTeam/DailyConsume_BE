@@ -36,4 +36,8 @@ public class WeeklyConsumeEntity {
 	@JoinColumn(name="memberId")
 	private MemberEntity member;
 
+	public void updateWeeklyCheck(){
+		this.weeklyCheck="1";
+	}
+
 }
