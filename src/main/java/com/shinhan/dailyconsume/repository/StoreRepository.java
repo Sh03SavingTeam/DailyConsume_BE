@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.shinhan.dailyconsume.domain.StoreEntity;
+import com.shinhan.dailyconsume.dto.map.RecommendDTO;
+import com.shinhan.dailyconsume.dto.map.WeeklyConsumeProjection;
 
 
 public interface StoreRepository extends JpaRepository<StoreEntity, String>{
@@ -24,4 +26,29 @@ public interface StoreRepository extends JpaRepository<StoreEntity, String>{
 	List<StoreEntity> findStoresWithinDistance(@Param("longitude") Double longitude, 
                                   @Param("latitude") Double latitude, 
                                   @Param("distance") Double distance);
+	
+	@Query(value = """
+	        SELECT ts.store_reg_num AS storeRegNum, ts.store_name AS storeName, 
+	               ts.store_addr AS storeAddr, ts.store_phone AS storePhone, 
+	               ts.store_latx AS storeLatx, ts.store_lony AS storeLony, 
+	               ts.store_img AS storeImg, tsc.cate_name AS cate
+	          FROM t_store ts
+	          JOIN t_menu tm ON (ts.store_reg_num = tm.store_reg_num)
+	          JOIN t_store_category tsc ON (ts.store_cate_seq = tsc.store_cate_seq)
+	         WHERE tm.menu_price < (SELECT 
+	            ((twc.weekly_money - (SELECT SUM(pay_amount)
+	               FROM t_pay_history tph
+	               JOIN t_member_card tmc ON (tph.card_num = tmc.card_num)
+	               JOIN t_member tm ON (tmc.member_id = tm.member_id)
+	              WHERE tph.pay_date BETWEEN twc.start_date AND twc.end_date
+	              AND tm.member_id = :memberId
+	            ))/ DATEDIFF(twc.end_date, CURDATE()))
+	          FROM t_weekly_consume twc
+	          WHERE twc.member_id = :memberId)
+	          AND tm.menu_price > 5000
+	          AND ts.store_latx IS NOT NULL
+	        GROUP BY ts.store_reg_num, ts.store_name, ts.store_addr, ts.store_phone, 
+	                 ts.store_latx, ts.store_lony, ts.store_img, tsc.cate_name
+	        """, nativeQuery = true)
+	    List<WeeklyConsumeProjection> findStoreWeeklyConsume(@Param("memberId") String memberId);
 }

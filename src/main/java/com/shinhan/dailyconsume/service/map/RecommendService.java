@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.shinhan.dailyconsume.domain.MenuEntity;
 import com.shinhan.dailyconsume.domain.StoreEntity;
+import com.shinhan.dailyconsume.dto.PayHistoryDTO;
+import com.shinhan.dailyconsume.dto.map.HomePayHistroyDTO;
 import com.shinhan.dailyconsume.dto.map.MenuDTO;
 import com.shinhan.dailyconsume.dto.map.RecommendDTO;
 import com.shinhan.dailyconsume.dto.map.StoreDetailDTO;
+import com.shinhan.dailyconsume.dto.map.WeeklyConsumeProjection;
 import com.shinhan.dailyconsume.dto.store.StoreDTO;
 
 public interface RecommendService {
@@ -24,6 +27,10 @@ public interface RecommendService {
 	List<RecommendDTO> dayPatternRecommend();
 	
 	List<RecommendDTO> allPatternRecommend();
+	
+	List<HomePayHistroyDTO> getPayHistory(String memId);
+	
+	List<WeeklyConsumeProjection> getWeeklyConsumeStore(String memId);
 
 	default RecommendDTO entityToDto(StoreEntity entity) {
 		return RecommendDTO.builder()
