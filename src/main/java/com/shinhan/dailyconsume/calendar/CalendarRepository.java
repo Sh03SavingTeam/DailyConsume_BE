@@ -28,14 +28,6 @@ public interface CalendarRepository extends JpaRepository<PayHistoryEntity, Long
 	PayHistoryEntity findByMemberIdAndPayId(@Param("memberId") String memberId, @Param("payId") Long payId);
 
 	// myPayCheck 값을 업데이트하는 메서드 (쿼리로 할 경우)
-	// @Modifying
-	// @Query("UPDATE PayHistoryEntity p SET p.myPayCheck = :myPayCheck WHERE
-	// p.memberCard.member.memberId = :memberId AND p.payId = :payId")
-	// void updateMyPayCheck(@Param("memberId") String memberId, @Param("payId")
-	// Long payId, @Param("myPayCheck") Integer myPayCheck);
-	// 단순히 엔티티를 가져와 수정하는 방법을 사용할 경우 위의 @Modifying 쿼리는 필요 없습니다.
-
-
 	@Query(value = "SELECT ph.pay_id, \n" + "            ph.pay_amount, \n" + "            ph.pay_date, \n"
 			+ "            cc.consume_name, \n" + "            mc.card_num, \n" + "            mc.card_name, \n"
 			+ "            se.store_reg_num, \n" + "            se.store_name, \n" + "            ph.my_pay_check \n"
