@@ -47,8 +47,8 @@ public class OCRService {
 	public JSONObject cardOCRService(String fileName) {
 
 		String bucketName = "shinhands3rd-project2";
-		//String keyName = "CardIMG/"+fileName;
-		String keyName = "CardIMG/cardexample.jpg";
+		String keyName = "CardIMG/"+fileName;
+		//String keyName = "CardIMG/cardimg_m001_1725264697619.jpg";
 		StringBuilder response = new StringBuilder();
 		System.out.println("사진 경로 : "+ bucketName+" "+keyName);
 
@@ -124,8 +124,8 @@ public class OCRService {
 	public JSONObject reciptOCRService(String fileName) {
 
 		String bucketName = "shinhands3rd-project2";
-		//String keyName = "ReceiptIMG/" + fileName;
-		String keyName = "ReceiptIMG/receiptex.jpg";
+		String keyName = "ReceiptIMG/" + fileName;
+		//String keyName = "ReceiptIMG/receiptex.jpg";
 		StringBuilder response = new StringBuilder();
 
 		try {
