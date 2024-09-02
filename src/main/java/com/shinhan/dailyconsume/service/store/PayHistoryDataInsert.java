@@ -67,7 +67,7 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 		
 		
 		
-		for(int i = 0; i < 10000; i++) {
+		for(int i = 0; i < 300; i++) {
 			
 			int teenExcludedRandomIdx = (int) (Math.random() * (teenStores.size() -1));;
 			int twentyMaleExcludedRandomIdx = (int) (Math.random() * (twentyMaleStores.size() - 1));;
@@ -137,8 +137,8 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 	}
 	
 	public Timestamp randomDate() {
-		Timestamp startDate = Timestamp.valueOf("2024-01-01 00:00:00");
-        Timestamp endDate = Timestamp.valueOf("2024-08-26 23:59:59");
+		Timestamp startDate = Timestamp.valueOf("2024-09-01 00:00:00");
+        Timestamp endDate = Timestamp.valueOf("2024-09-14 23:59:59");
         
         long startMillis = startDate.getTime();
         long endMillis = endDate.getTime();
