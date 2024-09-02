@@ -3,15 +3,21 @@ package com.shinhan.dailyconsume.service.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shinhan.dailyconsume.domain.MenuEntity;
+import com.shinhan.dailyconsume.domain.PayHistoryEntity;
 import com.shinhan.dailyconsume.domain.StoreEntity;
+import com.shinhan.dailyconsume.dto.map.HomePayHistroyDTO;
 import com.shinhan.dailyconsume.dto.map.MenuDTO;
 import com.shinhan.dailyconsume.dto.map.RecommendDTO;
 import com.shinhan.dailyconsume.dto.map.StoreDetailDTO;
+import com.shinhan.dailyconsume.dto.map.WeeklyConsumeProjection;
 import com.shinhan.dailyconsume.dto.store.StoreDTO;
 import com.shinhan.dailyconsume.repository.MenuRepository;
+import com.shinhan.dailyconsume.repository.PayHistoryRepository;
 import com.shinhan.dailyconsume.repository.StoreRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +28,7 @@ public class RecommendServiceImpl implements RecommendService{
 
 	private final StoreRepository storeRepo;
 	private final MenuRepository menuRepo;
+	private final PayHistoryRepository payHistoryRepo;
 	
 	Double longitude = 126.92270138644199;
 	Double latitude = 37.55936310336185;
@@ -129,6 +136,28 @@ public class RecommendServiceImpl implements RecommendService{
 			storeList.add(recommendStore);
 		}
 		return storeList;
+	}
+
+	@Override
+	public List<HomePayHistroyDTO> getPayHistory(String memId) {
+		Pageable pageable = PageRequest.of(0,20);
+		List<PayHistoryEntity> entityList = payHistoryRepo.findByMemberId(memId, pageable);
+		List<HomePayHistroyDTO> dtoList = new ArrayList<>();
+		for(PayHistoryEntity ph : entityList) {
+			HomePayHistroyDTO dto = HomePayHistroyDTO.builder()
+					.storeName(ph.getStores().getStoreName())
+					.payAmount(ph.getPayAmount().intValue())
+					.payDate(ph.getPayDate())
+					.build();
+			dtoList.add(dto);
+		}
+		return dtoList;
+	}
+
+	@Override
+	public List<WeeklyConsumeProjection> getWeeklyConsumeStore(String memId) {
+		List<WeeklyConsumeProjection> dtoList = storeRepo.findStoreWeeklyConsume(memId);
+		return dtoList;
 	}
 
 }
