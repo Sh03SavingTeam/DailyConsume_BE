@@ -11,9 +11,14 @@ import java.time.LocalDate;
 public class WeeklyScheduler {
 
     private final WeeklyConsumeService weeklyConsumeService;
+    private final MemberService memService;
 
     @Scheduled(cron = "0 0 0 * * 1")
     public void weeklyMission(){
         weeklyConsumeService.weeklyMission(LocalDate.now().plusDays(-1));
+    }
+    @Scheduled(cron = "0 0 0 1 * *")
+    public void monthRankReset() {
+    	memService.updateAllMembersRankToOne();
     }
 }

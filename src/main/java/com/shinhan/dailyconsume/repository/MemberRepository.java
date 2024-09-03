@@ -18,6 +18,10 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String>, Q
 
 	MemberEntity findByMemberId(String memberId);
 	
+	@Modifying
+	@Query("UPDATE MemberEntity m SET m.rank.rankId = 1")
+	void updateAllMembersRankToOne();
+	
 	//로그인한 유저의 나이대와 같은 멤버 리스트를 가져오는 쿼리 
 	@Query(value = " SELECT * FROM t_member m "
 			+ " WHERE TIMESTAMPDIFF(YEAR, m.member_birth, curdate()) "
