@@ -32,7 +32,7 @@ public class PayHistoryService {
 		payHistories.add(new PayHistoryDTO(0, "식비", 0));
 		payHistories.add(new PayHistoryDTO(0, "교통비", 0));
 		payHistories.add(new PayHistoryDTO(0, "온라인쇼핑", 0));
-		payHistories.add(new PayHistoryDTO(0, "여가", 0));
+		payHistories.add(new PayHistoryDTO(0, "문화/여가", 0));
 
 		List<PayHistoryEntity> datas = memberRepo.findPayHistoriesByMemberId(memberId);
 		
