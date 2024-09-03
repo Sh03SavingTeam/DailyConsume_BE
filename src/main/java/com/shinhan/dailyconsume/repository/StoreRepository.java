@@ -64,7 +64,7 @@ public interface StoreRepository extends JpaRepository<StoreEntity, String>{
 				  JOIN t_member_card tmc ON (tmc.card_num = tph.card_num)
 				  JOIN t_member tm ON (tm.member_id = tmc.member_id)
 				  WHERE tm.member_id = :memberId
-				  AND tph.pay_date BETWEEN '2024-09-01' AND '2024-09-08'
+				  AND tph.pay_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()
 				  GROUP BY ts.store_reg_num, ts.store_name, ts.store_addr, ts.store_latx, ts.store_lony, ts.store_img, ts.store_phone, tsc.cate_name
 			""", nativeQuery = true)
 	List<WeeklyConsumeProjection> findStorePayHistory(@Param("memberId") String memberId);

@@ -84,7 +84,7 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 			ConsumeCategoryEntity consumeCateEntity = ConsumeCategoryEntity.builder()
 					.consumeId(1L)
 					.build();
-			
+			if(teenMember.get(teenMemberRandomIdx).getMemberCards().size() != 0) {
 			PayHistoryEntity teenEntity = PayHistoryEntity.builder()
 					.payAmount(Long.valueOf(teenRandomPayAmout))
 					.consumeCategory(consumeCateEntity)
@@ -92,7 +92,10 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 					.stores(teenStores.get(teenExcludedRandomIdx))
 					.payDate(randomDate())
 					.build();
+			payHistoryRepo.save(teenEntity);
+			}
 			
+			if(twentyMaleMember.get(twentyMaleRandomIdx).getMemberCards().size() != 0) {
 			PayHistoryEntity twentyMaleEntity = PayHistoryEntity.builder()
 					.payAmount(Long.valueOf(twentyMaleRandomPayAmout))
 					.consumeCategory(consumeCateEntity)
@@ -100,7 +103,10 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 					.stores(twentyMaleStores.get(twentyMaleExcludedRandomIdx))
 					.payDate(randomDate())
 					.build();
+			payHistoryRepo.save(twentyMaleEntity);
+			}
 			
+			if(twentyFemaleMember.get(twentyFemaleRandomIdx).getMemberCards().size() != 0) {
 			PayHistoryEntity twentyFemaleEntity = PayHistoryEntity.builder()
 					.payAmount(Long.valueOf(twentyFemaleRandomPayAmout))
 					.consumeCategory(consumeCateEntity)
@@ -108,11 +114,8 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 					.stores(twentyFemaleStores.get(twentyFemaleExcludedRandomIdx))
 					.payDate(randomDate())
 					.build();
-			
-			payHistoryRepo.save(teenEntity);
-			payHistoryRepo.save(twentyMaleEntity);
 			payHistoryRepo.save(twentyFemaleEntity);
-			
+			}
 		}
 		
 	}

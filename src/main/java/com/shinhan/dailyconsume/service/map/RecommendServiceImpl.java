@@ -160,4 +160,11 @@ public class RecommendServiceImpl implements RecommendService{
 		return dtoList;
 	}
 
+	@Override
+	public List<WeeklyConsumeProjection> getStorePayHistory(String memId) {
+		System.out.println("++++++++++++++++++++++++++" + memId);
+		List<WeeklyConsumeProjection> dtoList = storeRepo.findStorePayHistory(memId);
+		return dtoList;
+	}
+
 }
