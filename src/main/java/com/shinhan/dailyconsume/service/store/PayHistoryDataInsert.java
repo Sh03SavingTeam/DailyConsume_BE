@@ -82,9 +82,9 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 			int twentyFemaleRandomPayAmout = (int) ((Math.random() * 1490) + 10)* 100;
 			
 			ConsumeCategoryEntity consumeCateEntity = ConsumeCategoryEntity.builder()
-					.consumeId(1L)
+					.consumeId(4L)
 					.build();
-			
+			if(teenMember.get(teenMemberRandomIdx).getMemberCards().size() != 0) {
 			PayHistoryEntity teenEntity = PayHistoryEntity.builder()
 					.payAmount(Long.valueOf(teenRandomPayAmout))
 					.consumeCategory(consumeCateEntity)
@@ -92,7 +92,10 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 					.stores(teenStores.get(teenExcludedRandomIdx))
 					.payDate(randomDate())
 					.build();
+			payHistoryRepo.save(teenEntity);
+			}
 			
+			if(twentyMaleMember.get(twentyMaleRandomIdx).getMemberCards().size() != 0) {
 			PayHistoryEntity twentyMaleEntity = PayHistoryEntity.builder()
 					.payAmount(Long.valueOf(twentyMaleRandomPayAmout))
 					.consumeCategory(consumeCateEntity)
@@ -100,7 +103,10 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 					.stores(twentyMaleStores.get(twentyMaleExcludedRandomIdx))
 					.payDate(randomDate())
 					.build();
+			payHistoryRepo.save(twentyMaleEntity);
+			}
 			
+			if(twentyFemaleMember.get(twentyFemaleRandomIdx).getMemberCards().size() != 0) {
 			PayHistoryEntity twentyFemaleEntity = PayHistoryEntity.builder()
 					.payAmount(Long.valueOf(twentyFemaleRandomPayAmout))
 					.consumeCategory(consumeCateEntity)
@@ -108,11 +114,8 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 					.stores(twentyFemaleStores.get(twentyFemaleExcludedRandomIdx))
 					.payDate(randomDate())
 					.build();
-			
-			payHistoryRepo.save(teenEntity);
-			payHistoryRepo.save(twentyMaleEntity);
 			payHistoryRepo.save(twentyFemaleEntity);
-			
+			}
 		}
 		
 	}
@@ -137,8 +140,8 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 	}
 	
 	public Timestamp randomDate() {
-		Timestamp startDate = Timestamp.valueOf("2024-09-01 00:00:00");
-        Timestamp endDate = Timestamp.valueOf("2024-09-14 23:59:59");
+		Timestamp startDate = Timestamp.valueOf("2024-07-01 00:00:00");
+        Timestamp endDate = Timestamp.valueOf("2024-09-12 23:59:59");
         
         long startMillis = startDate.getTime();
         long endMillis = endDate.getTime();
