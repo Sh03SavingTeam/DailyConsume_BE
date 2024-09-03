@@ -15,6 +15,7 @@ import com.shinhan.dailyconsume.dto.mypage.RankDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankHistoryInfoDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingDTO;
 import com.shinhan.dailyconsume.dto.mypage.RankingProjection;
+import com.shinhan.dailyconsume.service.MemberService;
 import com.shinhan.dailyconsume.service.RankService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/rank")
 public class RankController {
 	final RankService rankService;
-	
+	final MemberService memService;
 	
 	@GetMapping("/{memberId}")
 	public RankDTO rankInfo(@PathVariable("memberId") String memberId) {
@@ -53,5 +54,10 @@ public class RankController {
 		int totalAttendance = rankService.countAttendanceCheckByMemberId(memberId);
 		AttendanceDTO attenDTO = new AttendanceDTO(memberId,attendanceInfo,totalAttendance );
 		return attenDTO;
+	}
+	@GetMapping("/test")
+	public String updateTest(){
+		memService.updateAllMembersRankToOne();
+		return "finish";
 	}
 }
