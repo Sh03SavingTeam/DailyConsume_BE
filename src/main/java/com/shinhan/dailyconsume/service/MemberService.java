@@ -11,6 +11,8 @@ public interface MemberService {
 	
 	MemberDTO findMember(String memberId);
 	
+	void updateAllMembersRankToOne();
+	
 	default MemberEntity dtoToEntity(MemberDTO dto) {
 		RankEntity rank = RankEntity.builder().rankId(dto.getRankId()).build();
 		
