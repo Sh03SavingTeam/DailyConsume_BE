@@ -10,6 +10,8 @@ import com.shinhan.dailyconsume.dto.MemberDTO;
 import com.shinhan.dailyconsume.repository.MemberRepository;
 import com.shinhan.dailyconsume.repository.RankRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MemberServiceImpl implements MemberService{
 
@@ -32,5 +34,12 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDTO findMember(String memberId) {
 		MemberEntity member = memberRepo.findByMemberId(memberId);
 		return entityToDTO(member);
+	}
+	
+	@Transactional
+	@Override
+	public void updateAllMembersRankToOne() {
+		memberRepo.updateAllMembersRankToOne();
+		
 	};
 }

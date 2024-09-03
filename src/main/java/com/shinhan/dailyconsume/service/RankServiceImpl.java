@@ -35,14 +35,19 @@ public class RankServiceImpl implements RankService{
 		String rankName = member.getRank().getRankName();
 		String rankImg = member.getRank().getRankImg();
 		int totalScore = rHistoryRepo.getTotalScore(memberId);
-		
+
 		int nextAmount = 0;
 		
 		if((rankRepo.findById(member.getRank().getRankId()+1L).get())!=null){
 			nextAmount = (rankRepo.findById(member.getRank().getRankId()+1L).get().getScore().intValue())-totalScore;
 		}
-		
+		if(totalScore == 0) {
+			rankName = "거지토순이";
+			rankImg = "Character1";
+			nextAmount = 20;
+		}
 		RankDTO rankDTO = new RankDTO(memberName, rankName, rankImg, totalScore, nextAmount);
+
 		return rankDTO;
 	}
 

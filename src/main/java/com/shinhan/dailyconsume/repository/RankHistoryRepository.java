@@ -14,7 +14,7 @@ import com.shinhan.dailyconsume.dto.mypage.RankingProjection;
 
 public interface RankHistoryRepository extends JpaRepository<RankHistoryEntity, Long> {
 
-	@Query(value = "SELECT SUM(r.amount) AS total_amount " + "FROM t_rank_history r "
+	@Query(value = "SELECT COALESCE(SUM(r.amount), 0) AS total_amount " + "FROM t_rank_history r "
 			+ "WHERE MONTH(r.rank_reg_date) = MONTH(CURDATE()) " + "AND YEAR(r.rank_reg_date) = YEAR(CURDATE()) "
 			+ "AND r.member_id = :memberId", nativeQuery = true)
 	int getTotalScore(@Param("memberId") String memberId);
