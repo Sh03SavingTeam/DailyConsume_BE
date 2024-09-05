@@ -57,13 +57,15 @@ public interface StoreRepository extends JpaRepository<StoreEntity, String>{
 				  SELECT  ts.store_reg_num AS storeRegNum, ts.store_name AS storeName, 
 	              ts.store_addr AS storeAddr, ts.store_phone AS storePhone, 
 	              ts.store_latx AS storeLatx, ts.store_lony AS storeLony, 
-	              ts.store_img AS storeImg, tsc.cate_name AS cate
+	              ts.store_img AS storeImg, tsc.cate_name AS cate,
+	              tr.review_id AS reviewId
 				  FROM t_store ts
 				  JOIN t_store_category tsc ON (ts.store_cate_seq = tsc.store_cate_seq)
 				  JOIN t_pay_history tph ON (ts.store_reg_num = tph.str_reg_num)
 				  JOIN t_member_card tmc ON (tmc.card_num = tph.card_num)
 				  JOIN t_member tm ON (tm.member_id = tmc.member_id)
-				  WHERE tm.member_id = :memberId
+				  LEFT OUTER JOIN t_review tr ON (ts.store_reg_num  = tr.store_reg_num)
+				  WHERE tm.member_id = 'm001'
 				  AND tph.pay_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()
 				  GROUP BY ts.store_reg_num, ts.store_name, ts.store_addr, ts.store_latx, ts.store_lony, ts.store_img, ts.store_phone, tsc.cate_name
 			""", nativeQuery = true)

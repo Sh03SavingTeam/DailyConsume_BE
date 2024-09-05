@@ -56,7 +56,7 @@ public class RecommendServiceImpl implements RecommendService{
 		for(MenuEntity menuEntity: menuEntityList) {
 			dtoList.add(menuEntityToDto(menuEntity));
 		}
-		System.out.println("====================menu: " + dtoList);
+		
 		StoreDetailDTO dto = StoreDetailDTO.builder()
 				.storeRegNum(entity.getStoreRegNum())
 				.storeName(entity.getStoreName())
@@ -162,7 +162,6 @@ public class RecommendServiceImpl implements RecommendService{
 
 	@Override
 	public List<WeeklyConsumeProjection> getStorePayHistory(String memId) {
-		System.out.println("++++++++++++++++++++++++++" + memId);
 		List<WeeklyConsumeProjection> dtoList = storeRepo.findStorePayHistory(memId);
 		return dtoList;
 	}

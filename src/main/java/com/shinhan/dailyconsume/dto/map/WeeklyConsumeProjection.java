@@ -16,4 +16,6 @@ public interface WeeklyConsumeProjection {
 	String getStoreImg();
 
 	String getCate();
+	
+	String getReviewId();
 }
