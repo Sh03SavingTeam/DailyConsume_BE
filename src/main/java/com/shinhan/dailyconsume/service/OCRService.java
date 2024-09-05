@@ -182,7 +182,9 @@ public class OCRService {
 			// 응답 읽기
 			String inputLine;
 			while ((inputLine = br.readLine()) != null) {
+				System.out.println(inputLine);
 				response.append(inputLine);
+				
 			}
 
 			// System.out.println(response);

@@ -1,6 +1,8 @@
 package com.shinhan.dailyconsume.dto.map;
 
 public interface WeeklyConsumeProjection {
+	String getPayId();
+	
 	String getStoreRegNum();
 
 	String getStoreName();
