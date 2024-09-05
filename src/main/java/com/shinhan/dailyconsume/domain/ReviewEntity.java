@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ public class ReviewEntity {
 	private Long reviewId;
 	private double rating;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "storeRegNum")
-	private StoreEntity store;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "payId")
+	private PayHistoryEntity payHistory;
 }

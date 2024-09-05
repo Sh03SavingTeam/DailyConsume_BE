@@ -1,5 +1,6 @@
 package com.shinhan.dailyconsume.service;
 
+import com.shinhan.dailyconsume.domain.PayHistoryEntity;
 import com.shinhan.dailyconsume.domain.ReviewEntity;
 import com.shinhan.dailyconsume.domain.StoreEntity;
 import com.shinhan.dailyconsume.dto.ReviewDTO;
@@ -11,11 +12,11 @@ public interface ReviewService {
 
 	
 	default ReviewEntity dtoToEntity(ReviewDTO dto) {
-		StoreEntity storeen= StoreEntity.builder().storeRegNum(dto.getStoreRegNum()).build();
+		PayHistoryEntity payEntity = PayHistoryEntity.builder().payId(dto.getPayId()).build();
 		ReviewEntity reviewen = ReviewEntity.builder()
 				.reviewId(dto.getReviewId())
 				.rating(dto.getRating())
-				.store(storeen)
+				.payHistory(payEntity)
 				.build();
 		
 		return reviewen;
@@ -25,7 +26,7 @@ public interface ReviewService {
 		ReviewDTO dto = ReviewDTO.builder()
 				.reviewId(entity.getReviewId())
 				.rating(entity.getRating())
-				.storeRegNum(entity.getStore().getStoreRegNum())
+				.payId(entity.getPayHistory().getPayId())
 				.build();
 		
 		return dto;
