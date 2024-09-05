@@ -65,4 +65,9 @@ public class StoreRecommendController {
 	public ResponseEntity<Object> weeklyConsume(@RequestParam String memId) {
 		return ResponseEntity.ok(recommenService.getWeeklyConsumeStore(memId));
 	}
+	
+	@GetMapping("/history")
+	public ResponseEntity<Object> payHistoryStore(@RequestParam String memId) {
+		return ResponseEntity.ok(recommenService.getStorePayHistory(memId));
+	}
 }

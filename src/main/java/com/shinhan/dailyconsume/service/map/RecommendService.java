@@ -31,6 +31,8 @@ public interface RecommendService {
 	List<HomePayHistroyDTO> getPayHistory(String memId);
 	
 	List<WeeklyConsumeProjection> getWeeklyConsumeStore(String memId);
+	
+	List<WeeklyConsumeProjection> getStorePayHistory(String memId);
 
 	default RecommendDTO entityToDto(StoreEntity entity) {
 		return RecommendDTO.builder()
