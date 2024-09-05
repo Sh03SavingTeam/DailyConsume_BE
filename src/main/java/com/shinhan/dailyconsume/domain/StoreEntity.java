@@ -34,10 +34,6 @@ public class StoreEntity {
 	private Double storeLonY;
 	@Column(length = 400)
 	private String storeImg;
-	
-	@OneToMany(mappedBy = "store"
-			, fetch = FetchType.LAZY)
-	private List<ReviewEntity> review;
 
 	@ManyToOne
 	@JoinColumn(name = "storeCateSeq")

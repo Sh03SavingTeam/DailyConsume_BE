@@ -15,5 +15,5 @@ public class ReviewDTO {
 	@Id
 	private Long reviewId;
 	private double rating;
-	private String storeRegNum;
+	private Long payId;
 }
