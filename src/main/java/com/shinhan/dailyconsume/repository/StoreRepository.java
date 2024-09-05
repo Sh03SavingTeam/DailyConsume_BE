@@ -54,7 +54,9 @@ public interface StoreRepository extends JpaRepository<StoreEntity, String>{
 	    List<WeeklyConsumeProjection> findStoreWeeklyConsume(@Param("memberId") String memberId);
 	
 	@Query(value = """
-				  SELECT  ts.store_reg_num AS storeRegNum, ts.store_name AS storeName, 
+				  SELECT  
+				  tph.pay_id AS payId,
+				  ts.store_reg_num AS storeRegNum, ts.store_name AS storeName, 
 	              ts.store_addr AS storeAddr, ts.store_phone AS storePhone, 
 	              ts.store_latx AS storeLatx, ts.store_lony AS storeLony, 
 	              ts.store_img AS storeImg, tsc.cate_name AS cate,
