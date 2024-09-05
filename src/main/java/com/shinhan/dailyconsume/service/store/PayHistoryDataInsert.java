@@ -82,7 +82,7 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 			int twentyFemaleRandomPayAmout = (int) ((Math.random() * 1490) + 10)* 100;
 			
 			ConsumeCategoryEntity consumeCateEntity = ConsumeCategoryEntity.builder()
-					.consumeId(1L)
+					.consumeId(4L)
 					.build();
 			if(teenMember.get(teenMemberRandomIdx).getMemberCards().size() != 0) {
 			PayHistoryEntity teenEntity = PayHistoryEntity.builder()
@@ -140,8 +140,8 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 	}
 	
 	public Timestamp randomDate() {
-		Timestamp startDate = Timestamp.valueOf("2024-09-01 00:00:00");
-        Timestamp endDate = Timestamp.valueOf("2024-09-14 23:59:59");
+		Timestamp startDate = Timestamp.valueOf("2024-07-01 00:00:00");
+        Timestamp endDate = Timestamp.valueOf("2024-09-12 23:59:59");
         
         long startMillis = startDate.getTime();
         long endMillis = endDate.getTime();

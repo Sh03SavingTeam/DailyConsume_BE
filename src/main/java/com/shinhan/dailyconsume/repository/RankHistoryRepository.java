@@ -70,7 +70,7 @@ public interface RankHistoryRepository extends JpaRepository<RankHistoryEntity, 
 	int countAttendanceCheckByMemberId(@Param("memberId") String memberId);
 
 	@Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM t_rank_history r "
-			+ "WHERE r.member_id = :memberId " + "AND DATE(r.rank_reg_date) = CURRENT_DATE()", nativeQuery = true)
+			+ "WHERE r.member_id = :memberId " + "AND DATE(r.rank_reg_date) = CURRENT_DATE() AND r.cmt = '출석체크'", nativeQuery = true)
 	int checkIfRankExistsForToday(@Param("memberId") String memberId);
 
 }
