@@ -141,7 +141,7 @@ public class PayHistoryDataInsert implements CommandLineRunner{
 	
 	public Timestamp randomDate() {
 		Timestamp startDate = Timestamp.valueOf("2024-07-01 00:00:00");
-        Timestamp endDate = Timestamp.valueOf("2024-09-12 23:59:59");
+        Timestamp endDate = Timestamp.valueOf("2024-09-11 23:59:59");
         
         long startMillis = startDate.getTime();
         long endMillis = endDate.getTime();
